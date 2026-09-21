@@ -12,7 +12,10 @@ import {
   Compass, 
   Sparkles,
   RefreshCw,
-  ExternalLink
+  ExternalLink,
+  Plus,
+  Minus,
+  RotateCcw
 } from 'lucide-react';
 
 export default function SplinePhaseBrowser({ activeStepIndex, setActiveStepIndex, onOpenSimulator }) {
@@ -26,16 +29,20 @@ export default function SplinePhaseBrowser({ activeStepIndex, setActiveStepIndex
   // 3D Canvas References & State
   const canvasRef = useRef(null);
   const isDraggingRef = useRef(false);
+  const isPinchingRef = useRef(false);
+  const initialPinchDistRef = useRef(null);
+  const initialPinchZoomRef = useRef(1.0);
   const lastMousePosRef = useRef({ x: 0, y: 0 });
   
-  // Camera angles and distance
+  // Camera angles and distance with mobile-responsive initial zoom
+  const isInitialMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   const cameraRef = useRef({
     yaw: 0.35,       // horizontal angle around Y
     pitch: 0.22,     // vertical tilt
-    zoom: 1.1,       // camera distance scale
+    zoom: isInitialMobile ? 0.55 : 1.1,       // camera distance scale
     targetYaw: 0.35,
     targetPitch: 0.22,
-    targetZoom: 1.1
+    targetZoom: isInitialMobile ? 0.55 : 1.1
   });
 
   const [telemetry, setTelemetry] = useState({
@@ -48,6 +55,22 @@ export default function SplinePhaseBrowser({ activeStepIndex, setActiveStepIndex
   });
 
   const activeStep = workflowSteps[activeStepIndex];
+
+  // Tactile Zoom Handlers
+  const handleZoomIn = () => {
+    cameraRef.current.targetZoom = Math.min(2.5, cameraRef.current.targetZoom + 0.2);
+  };
+
+  const handleZoomOut = () => {
+    cameraRef.current.targetZoom = Math.max(0.30, cameraRef.current.targetZoom - 0.2);
+  };
+
+  const handleResetView = () => {
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    cameraRef.current.targetYaw = 0.35;
+    cameraRef.current.targetPitch = 0.22;
+    cameraRef.current.targetZoom = isMobile ? 0.55 : 1.1;
+  };
 
   // Lazy load @splinetool/react-spline when switching to spline-cloud mode
   useEffect(() => {
@@ -68,12 +91,15 @@ export default function SplinePhaseBrowser({ activeStepIndex, setActiveStepIndex
 
   // Adjust camera target when active phase changes
   useEffect(() => {
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const baseZoom = isMobile ? 0.55 : 1.25;
+
     const phaseAngles = [
-      { yaw: -0.65, pitch: 0.25, zoom: 1.25 }, // Phase 1
-      { yaw: -0.32, pitch: 0.15, zoom: 1.20 }, // Phase 2
-      { yaw: 0.00,  pitch: 0.28, zoom: 1.30 }, // Phase 3 (Center)
-      { yaw: 0.32,  pitch: 0.18, zoom: 1.20 }, // Phase 4
-      { yaw: 0.65,  pitch: 0.26, zoom: 1.25 }  // Phase 5
+      { yaw: -0.65, pitch: 0.25, zoom: baseZoom }, // Phase 1
+      { yaw: -0.32, pitch: 0.15, zoom: baseZoom * 0.96 }, // Phase 2
+      { yaw: 0.00,  pitch: 0.28, zoom: baseZoom * 1.04 }, // Phase 3 (Center)
+      { yaw: 0.32,  pitch: 0.18, zoom: baseZoom * 0.96 }, // Phase 4
+      { yaw: 0.65,  pitch: 0.26, zoom: baseZoom }  // Phase 5
     ];
 
     const target = phaseAngles[activeStepIndex] || phaseAngles[0];
@@ -181,9 +207,12 @@ export default function SplinePhaseBrowser({ activeStepIndex, setActiveStepIndex
       const splineGridColor = isDark ? 'rgba(255, 255, 255, 0.03)' : 'rgba(0, 0, 0, 0.03)';
       const accentGlow = isDark ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.08)';
 
+      const isMobile = width < 768;
       const cx = width / 2;
       const cy = height / 2;
-      const fov = 550 * zoom;
+      // Responsive base FOV ensures the trajectory is comfortably scaled to fit mobile screens
+      const responsiveBaseFov = isMobile ? Math.min(220, width * 0.55) : 520;
+      const fov = responsiveBaseFov * zoom;
 
       // 3D Perspective Projection function
       const project3D = (x, y, z) => {
@@ -323,7 +352,6 @@ export default function SplinePhaseBrowser({ activeStepIndex, setActiveStepIndex
       // 5. Draw 3D Phase Nodes
       renderedNodes.forEach(node => {
         const radius = (node.isActive ? 13 : 8) * (node.scale * 0.9);
-        const isHoverOrActive = node.isActive;
 
         // Ground anchor hairline drop line
         const groundPt = project3D(node.x, floorY, node.z);
@@ -361,22 +389,24 @@ export default function SplinePhaseBrowser({ activeStepIndex, setActiveStepIndex
         }
 
         // Node Body Circle
+        const nodeRadius = (node.isActive ? 8 : 5.5) * (isMobile ? 0.75 : 1.0);
         ctx.beginPath();
-        ctx.arc(node.px, node.py, Math.max(4, radius), 0, Math.PI * 2);
+        ctx.arc(node.px, node.py, Math.max(3, nodeRadius), 0, Math.PI * 2);
         ctx.fillStyle = node.isActive ? (isDark ? '#f4f4f5' : '#09090b') : (isDark ? '#18181c' : '#ffffff');
         ctx.fill();
         ctx.strokeStyle = node.isActive ? (isDark ? '#09090b' : '#ffffff') : splinePrimaryColor;
-        ctx.lineWidth = node.isActive ? 3 : 1.5;
+        ctx.lineWidth = node.isActive ? 2.5 : 1.5;
         ctx.stroke();
 
-        // Label Pill
-        const labelText = `0${node.index + 1} // ${node.label}`;
-        ctx.font = `600 ${Math.max(10, Math.round(11 * node.scale))}px "JetBrains Mono", monospace`;
+        // Label Pill - crisp, readable typography scaled for viewport
+        const labelText = isMobile ? `0${node.index + 1} ${node.label}` : `0${node.index + 1} // ${node.label}`;
+        const fontSize = isMobile ? 9 : Math.max(10, Math.round(11 * node.scale));
+        ctx.font = `600 ${fontSize}px "JetBrains Mono", monospace`;
         const textWidth = ctx.measureText(labelText).width;
-        const pillHeight = 22;
-        const pillWidth = textWidth + 18;
+        const pillHeight = isMobile ? 18 : 22;
+        const pillWidth = textWidth + (isMobile ? 10 : 18);
         const pillX = node.px - pillWidth / 2;
-        const pillY = node.py - radius - 26;
+        const pillY = node.py - nodeRadius - (isMobile ? 16 : 24);
 
         // Pill background
         ctx.fillStyle = node.isActive 
@@ -395,7 +425,7 @@ export default function SplinePhaseBrowser({ activeStepIndex, setActiveStepIndex
           ? (isDark ? '#09090b' : '#ffffff') 
           : (isDark ? '#f4f4f5' : '#09090b');
         ctx.textBaseline = 'middle';
-        ctx.fillText(labelText, pillX + 9, pillY + pillHeight / 2);
+        ctx.fillText(labelText, pillX + (isMobile ? 5 : 9), pillY + pillHeight / 2);
       });
 
       animationFrameId = requestAnimationFrame(render);
@@ -426,29 +456,70 @@ export default function SplinePhaseBrowser({ activeStepIndex, setActiveStepIndex
     const handleWheel = (e) => {
       e.preventDefault();
       const zoomDelta = e.deltaY * -0.0012;
-      cameraRef.current.targetZoom = Math.max(0.65, Math.min(2.2, cameraRef.current.targetZoom + zoomDelta));
+      // Allow zooming out comfortably down to 0.30 and in up to 2.50
+      cameraRef.current.targetZoom = Math.max(0.30, Math.min(2.5, cameraRef.current.targetZoom + zoomDelta));
     };
 
-    // Touch Event Handlers for Mobile & Tablet screens
+    // Touch Event Handlers for Mobile & Tablet screens (Fluid Pinch-to-zoom & 1-finger orbit)
     const handleTouchStart = (e) => {
-      if (e.touches && e.touches.length === 1) {
+      if (!e.touches) return;
+      if (e.touches.length === 2) {
+        // 2-finger pinch start
+        isPinchingRef.current = true;
+        isDraggingRef.current = false;
+        const dist = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+        initialPinchDistRef.current = dist;
+        initialPinchZoomRef.current = cameraRef.current.targetZoom;
+        if (e.cancelable) e.preventDefault();
+      } else if (e.touches.length === 1) {
+        // 1-finger orbit start
         isDraggingRef.current = true;
+        isPinchingRef.current = false;
         lastMousePosRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
       }
     };
 
     const handleTouchMove = (e) => {
-      if (!isDraggingRef.current || !e.touches || e.touches.length !== 1) return;
-      const dx = e.touches[0].clientX - lastMousePosRef.current.x;
-      const dy = e.touches[0].clientY - lastMousePosRef.current.y;
-      lastMousePosRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      if (!e.touches) return;
+      if (e.touches.length === 2 && isPinchingRef.current && initialPinchDistRef.current) {
+        // 2-finger pinch scale calculation
+        if (e.cancelable) e.preventDefault();
+        const currentDist = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+        if (currentDist > 0 && initialPinchDistRef.current > 0) {
+          const scaleRatio = currentDist / initialPinchDistRef.current;
+          const newZoom = initialPinchZoomRef.current * scaleRatio;
+          // Zoom out down to 0.30, zoom in up to 2.5
+          cameraRef.current.targetZoom = Math.max(0.30, Math.min(2.5, newZoom));
+        }
+      } else if (e.touches.length === 1 && isDraggingRef.current) {
+        // 1-finger orbit
+        if (e.cancelable) e.preventDefault();
+        const dx = e.touches[0].clientX - lastMousePosRef.current.x;
+        const dy = e.touches[0].clientY - lastMousePosRef.current.y;
+        lastMousePosRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
 
-      cameraRef.current.targetYaw += dx * 0.008;
-      cameraRef.current.targetPitch = Math.max(-0.6, Math.min(0.8, cameraRef.current.targetPitch - dy * 0.008));
+        cameraRef.current.targetYaw += dx * 0.008;
+        cameraRef.current.targetPitch = Math.max(-0.6, Math.min(0.8, cameraRef.current.targetPitch - dy * 0.008));
+      }
     };
 
-    const handleTouchEnd = () => {
-      isDraggingRef.current = false;
+    const handleTouchEnd = (e) => {
+      if (!e.touches || e.touches.length < 2) {
+        isPinchingRef.current = false;
+        initialPinchDistRef.current = null;
+      }
+      if (!e.touches || e.touches.length === 0) {
+        isDraggingRef.current = false;
+      } else if (e.touches.length === 1) {
+        isDraggingRef.current = true;
+        lastMousePosRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      }
     };
 
     // Click & Tap detection on phase nodes
@@ -460,9 +531,11 @@ export default function SplinePhaseBrowser({ activeStepIndex, setActiveStepIndex
       const clickY = clientY - rect.top;
 
       // Check distance to projected phase nodes
+      const isMobile = rect.width < 768;
       const cx = rect.width / 2;
       const cy = rect.height / 2;
-      const fov = 550 * cameraRef.current.zoom;
+      const responsiveBaseFov = isMobile ? Math.min(220, rect.width * 0.55) : 520;
+      const fov = responsiveBaseFov * cameraRef.current.zoom;
 
       phaseNodes3D.forEach((node, idx) => {
         // Approximate projection
@@ -481,7 +554,7 @@ export default function SplinePhaseBrowser({ activeStepIndex, setActiveStepIndex
         const py = cy + y2 * scale;
 
         const dist = Math.hypot(clickX - px, clickY - py);
-        if (dist < 36) {
+        if (dist < (isMobile ? 28 : 36)) {
           setActiveStepIndex(idx);
         }
       });
@@ -493,10 +566,11 @@ export default function SplinePhaseBrowser({ activeStepIndex, setActiveStepIndex
     canvas.addEventListener('wheel', handleWheel, { passive: false });
     canvas.addEventListener('click', handleClick);
 
-    // Mobile touch gestures
-    canvas.addEventListener('touchstart', handleTouchStart, { passive: true });
-    window.addEventListener('touchmove', handleTouchMove, { passive: true });
-    window.addEventListener('touchend', handleTouchEnd);
+    // Mobile touch gestures with non-passive listeners for pinch capture
+    canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
+    canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
+    canvas.addEventListener('touchend', handleTouchEnd);
+    canvas.addEventListener('touchcancel', handleTouchEnd);
 
     return () => {
       window.removeEventListener('resize', resizeCanvas);
@@ -507,8 +581,9 @@ export default function SplinePhaseBrowser({ activeStepIndex, setActiveStepIndex
       canvas.removeEventListener('wheel', handleWheel);
       canvas.removeEventListener('click', handleClick);
       canvas.removeEventListener('touchstart', handleTouchStart);
-      window.removeEventListener('touchmove', handleTouchMove);
-      window.removeEventListener('touchend', handleTouchEnd);
+      canvas.removeEventListener('touchmove', handleTouchMove);
+      canvas.removeEventListener('touchend', handleTouchEnd);
+      canvas.removeEventListener('touchcancel', handleTouchEnd);
     };
   }, [engineMode, autoRotate, activeStepIndex, setActiveStepIndex]);
 
@@ -589,27 +664,13 @@ export default function SplinePhaseBrowser({ activeStepIndex, setActiveStepIndex
           <>
             <canvas 
               ref={canvasRef} 
-              style={{ width: '100%', height: '100%', display: 'block' }}
+              style={{ width: '100%', height: '100%', display: 'block', touchAction: 'none' }}
             />
 
             {/* In-canvas Guidance Overlay */}
-            <div 
-              style={{
-                position: 'absolute',
-                top: '16px',
-                left: '20px',
-                pointerEvents: 'none',
-                fontFamily: 'var(--font-mono)',
-                fontSize: '0.7rem',
-                color: 'var(--text-caption)',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '4px'
-              }}
-            >
-              <div>[DRAG] Orbit 360° Perspective</div>
-              <div>[SCROLL] Zoom Depth</div>
-              <div>[CLICK NODE] Lock Camera on Phase</div>
+            <div className="spline-canvas-guide">
+              <span className="guide-desktop">[DRAG] Orbit 360° • [SCROLL] Zoom Depth • [CLICK NODE] Select</span>
+              <span className="guide-mobile">[DRAG] Rotate • [PINCH / + −] Zoom • [TAP] Select</span>
             </div>
 
             {/* Real-time Target Crosshair in Center */}
@@ -627,6 +688,37 @@ export default function SplinePhaseBrowser({ activeStepIndex, setActiveStepIndex
             >
               <div style={{ position: 'absolute', top: '9px', left: 0, right: 0, height: '1px', background: 'var(--text-ink)' }}></div>
               <div style={{ position: 'absolute', left: '9px', top: 0, bottom: 0, width: '1px', background: 'var(--text-ink)' }}></div>
+            </div>
+
+            {/* Tactile Zoom & Reset HUD for Mobile / Quick Tap */}
+            <div className="spline-canvas-zoom-hud" id="spline-canvas-zoom-hud">
+              <button 
+                type="button"
+                className="canvas-hud-btn" 
+                onClick={handleZoomIn} 
+                title="Zoom In"
+                aria-label="Zoom In 3D Canvas"
+              >
+                <Plus size={14} />
+              </button>
+              <button 
+                type="button"
+                className="canvas-hud-btn" 
+                onClick={handleZoomOut} 
+                title="Zoom Out"
+                aria-label="Zoom Out 3D Canvas"
+              >
+                <Minus size={14} />
+              </button>
+              <button 
+                type="button"
+                className="canvas-hud-btn" 
+                onClick={handleResetView} 
+                title="Reset View"
+                aria-label="Reset 3D Canvas Camera"
+              >
+                <RotateCcw size={13} />
+              </button>
             </div>
 
             {/* Floating Picture-in-Picture Specimen Viewfinder Feed */}

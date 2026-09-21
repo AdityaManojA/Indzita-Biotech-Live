@@ -1640,6 +1640,76 @@ h1, h2, h3, h4, h5 {
   color: var(--text-muted);
 }
 
+/* 3D Spline Canvas Touch & Guidance Overlays */
+.spline-viewport-canvas canvas {
+  touch-action: none;
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
+.spline-canvas-guide {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  pointer-events: none;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-caption);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  padding: 4px 10px;
+  border-radius: var(--radius-xs);
+  box-shadow: var(--shadow-editorial);
+  opacity: 0.9;
+  z-index: 5;
+  backdrop-filter: blur(8px);
+}
+
+.guide-mobile {
+  display: none;
+}
+
+.guide-desktop {
+  display: inline;
+}
+
+/* Tactile Zoom & Reset HUD for 3D Canvas */
+.spline-canvas-zoom-hud {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 10;
+}
+
+.canvas-hud-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-xs);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  color: var(--text-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-editorial);
+  transition: all 0.15s ease;
+  backdrop-filter: blur(8px);
+}
+
+.canvas-hud-btn:hover {
+  background: var(--bg-subtle);
+  border-color: var(--border-medium);
+  transform: translateY(-1px);
+}
+
+.canvas-hud-btn:active {
+  transform: translateY(0);
+}
+
 /* 2D Rail Thumbnail */
 .step-rail-thumb {
   width: 100%;
@@ -3033,8 +3103,15 @@ h1, h2, h3, h4, h5 {
     background: var(--text-ink);
   }
 
+  .guide-desktop {
+    display: none;
+  }
+  .guide-mobile {
+    display: inline;
+  }
+
   .spline-viewport-canvas {
-    height: 320px;
+    height: 340px;
   }
   .spline-controls-rail {
     padding: 16px;
@@ -3243,7 +3320,7 @@ h1, h2, h3, h4, h5 {
     max-height: 260px;
   }
   .spline-viewport-canvas {
-    height: 280px;
+    height: 310px;
   }
 }
 
