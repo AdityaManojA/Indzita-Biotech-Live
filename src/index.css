@@ -1143,10 +1143,12 @@ h1, h2, h3, h4, h5 {
 /* Generalized Atlas Oscilloscope Stage & Sensor Controls */
 .atlas-stage-container {
   width: 90%;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  margin: 0 auto;
 }
 
 .atlas-oscilloscope-box {
@@ -1558,6 +1560,33 @@ h1, h2, h3, h4, h5 {
   letter-spacing: 0.04em;
   backdrop-filter: blur(4px);
   z-index: 5;
+}
+
+.phase-focal-img,
+.pipeline-img,
+.phase-focal-img-frame img,
+.pipeline-img-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.spline-step-thumb-img,
+.step-rail-thumb-img,
+.spline-step-thumb img,
+.step-rail-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.spline-step-tab-btn:hover .spline-step-thumb-img,
+.pipeline-step-tab:hover .step-rail-thumb-img {
+  transform: scale(1.05);
 }
 
 /* Floating Picture-in-Picture Signal Viewfinder on 3D Canvas */

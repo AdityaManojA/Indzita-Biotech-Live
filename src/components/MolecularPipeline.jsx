@@ -105,7 +105,13 @@ export default function MolecularPipeline({ onOpenSimulator }) {
                   id={`pipeline-step-tab-${idx + 1}`}
                 >
                   <div className="step-rail-thumb">
-                    <PhaseCurveThumb phaseIndex={idx} isActive={activeStepIndex === idx} />
+                    <img 
+                      src={step.image} 
+                      alt={step.title} 
+                      className="step-rail-thumb-img"
+                      loading="lazy"
+                      onError={(e) => { e.currentTarget.src = '/images/sample.png'; }}
+                    />
                   </div>
                   <div className="step-index-mono">PHASE 0{idx + 1}</div>
                   <div className="step-label">{step.title}</div>
@@ -116,7 +122,13 @@ export default function MolecularPipeline({ onOpenSimulator }) {
             {/* Editorial Viewer Grid */}
             <div className="pipeline-viewer-grid" id="pipeline-viewer-grid">
               <div className="pipeline-img-frame">
-                <PhaseCurveViewer phaseIndex={activeStepIndex} isPip={false} />
+                <img 
+                  src={activeStep.image} 
+                  alt={activeStep.title} 
+                  className="pipeline-img"
+                  loading="lazy"
+                  onError={(e) => { e.currentTarget.src = '/images/sample.png'; }}
+                />
               </div>
 
               <div>

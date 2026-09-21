@@ -822,7 +822,13 @@ export default function SplinePhaseBrowser({ activeStepIndex, setActiveStepIndex
               aria-selected={activeStepIndex === idx}
             >
               <div className="spline-step-thumb">
-                <PhaseCurveThumb phaseIndex={idx} isActive={activeStepIndex === idx} />
+                <img 
+                  src={step.image} 
+                  alt={step.title} 
+                  className="spline-step-thumb-img"
+                  loading="lazy"
+                  onError={(e) => { e.currentTarget.src = '/images/sample.png'; }}
+                />
               </div>
               <div>
                 <div className="step-index-mono" style={{ fontSize: '0.68rem', marginBottom: '2px' }}>
@@ -836,12 +842,18 @@ export default function SplinePhaseBrowser({ activeStepIndex, setActiveStepIndex
           ))}
         </div>
 
-        {/* Phase Focal Card with Animated Waveform / Signal Architecture & Specs */}
+        {/* Phase Focal Card with Workflow Specimen Imaging & Specs */}
         <div className="phase-focal-card">
-          {/* Column 1: Precision Scientific Signal Architecture */}
+          {/* Column 1: Clinical Stage Specimen Imaging */}
           <div className="phase-focal-img-frame">
-            <PhaseCurveViewer phaseIndex={activeStepIndex} isPip={false} />
-            <span className="phase-img-badge">STAGE 0{activeStepIndex + 1} // SIGNAL ARCHITECTURE</span>
+            <img 
+              src={activeStep.image} 
+              alt={activeStep.title} 
+              className="phase-focal-img"
+              loading="lazy"
+              onError={(e) => { e.currentTarget.src = '/images/sample.png'; }}
+            />
+            <span className="phase-img-badge">STAGE 0{activeStepIndex + 1} // SPECIMEN</span>
           </div>
 
           {/* Column 2: Narrative & Clinical Context */}
