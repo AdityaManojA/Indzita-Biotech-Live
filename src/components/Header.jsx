@@ -63,16 +63,8 @@ export default function Header({ onOpenSimulator, onOpenArticle, onGoHome, curre
           </ul>
         </nav>
 
-        {/* Actions: Telemetry Chip, Theme Switcher & Virtual Lab CTA */}
+        {/* Actions: Theme Switcher & Virtual Lab CTA */}
         <div className="header-actions">
-          {/* Live Telemetry Status Chip */}
-          <div className="nav-status-chip" title="Diagnostic QC Pipeline Active">
-            <span className="live-radar-dot"></span>
-            <span>QC ONLINE</span>
-          </div>
-
-          <div className="nav-actions-sep"></div>
-
           {/* Theme Toggle Icon Button */}
           <button 
             className="nav-icon-btn"
@@ -113,7 +105,7 @@ export default function Header({ onOpenSimulator, onOpenArticle, onGoHome, curre
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '12px', borderBottom: '1px solid var(--border-hairline)' }}>
             <div className="nav-status-chip">
               <span className="live-radar-dot"></span>
-              <span>SYSTEM ACTIVE // QC PASSED</span>
+              <span>SYSTEM ACTIVE // ONLINE</span>
             </div>
             <button 
               className="nav-icon-btn"
