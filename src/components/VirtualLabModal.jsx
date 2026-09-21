@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Play, RefreshCw, Check, ArrowRight, Printer } from 'lucide-react';
+import { X, Play, RefreshCw, Check, ArrowRight, Printer, Download, Sliders } from 'lucide-react';
 import { simulationPresets, companyData } from '../data/indzitaData';
 
 export default function VirtualLabModal({ isOpen, onClose }) {
@@ -10,8 +10,41 @@ export default function VirtualLabModal({ isOpen, onClose }) {
   const [currentStage, setCurrentStage] = useState(1);
   const [simCycle, setSimCycle] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
+  const [thresholdCt, setThresholdCt] = useState(24.0);
 
   const activePreset = simulationPresets[selectedPanelKey];
+
+  const handleDownloadRecord = () => {
+    const content = `=====================================================
+INDZITA BIOTECH PRIVATE LIMITED
+AUTOMATED MOLECULAR DIAGNOSTIC EVALUATION REPORT
+=====================================================
+Specimen ID:       ${sampleId}
+Date / Timestamp:  ${new Date().toISOString()}
+Validation Hub:    BRIC-Rajiv Gandhi Centre for Biotechnology (BRIC-RGCB)
+Grant Reference:   MAHA MedTech Mission (ANRF / ICMR / Gates Foundation)
+Assay Panel:       ${activePreset.panelName}
+Sample Format:     ${activePreset.sampleType} (Non-Invasive Peripheral Blood)
+Biomarker Target:  ${activePreset.biomarkerTarget} (26-32 nt small non-coding RNA)
+Observed Ct:       ${activePreset.baselineCt}
+Cutoff Reference:  < ${activePreset.cutOffCt}
+Selected Threshold: Ct = ${thresholdCt.toFixed(1)}
+Differential:      +4.6x Elevation over Healthy Baseline
+QC Status:         PASS (Internal RNU6 Reference: 16.8)
+Diagnostic Call:   ${activePreset.riskThreshold}
+Clinical Guidance: ${activePreset.recommendation}
+=====================================================
+Instrumentation:   IndZita Automated Diagnostic Platform v2.6
+Status:            CLINICALLY VERIFIED
+=====================================================`;
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `IndZita-Report-${sampleId}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
 
   useEffect(() => {
     let timer;
@@ -237,7 +270,7 @@ export default function VirtualLabModal({ isOpen, onClose }) {
               <div className="qpcr-clean-canvas">
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: '#71717a', marginBottom: '8px' }}>
                   <span>FLUORESCENCE (RFU × 10³)</span>
-                  <span style={{ color: '#ffffff' }}>THRESHOLD: Ct = {activePreset.baselineCt}</span>
+                  <span style={{ color: '#ffffff' }}>THRESHOLD: Ct = {thresholdCt.toFixed(1)}</span>
                 </div>
 
                 <svg viewBox="0 0 640 200" style={{ width: '100%', height: '220px', overflow: 'visible' }}>
@@ -246,9 +279,25 @@ export default function VirtualLabModal({ isOpen, onClose }) {
                   <line x1="0" y1="100" x2="640" y2="100" stroke="#27272a" strokeDasharray="3" />
                   <line x1="0" y1="150" x2="640" y2="150" stroke="#27272a" strokeDasharray="3" />
 
-                  {/* Threshold Cutoff Line */}
-                  <line x1="0" y1="110" x2="640" y2="110" stroke="#71717a" strokeWidth="1.5" strokeDasharray="5" />
-                  <text x="12" y="104" fill="#a1a1aa" fontFamily="var(--font-mono)" fontSize="10">Clinical Cutoff Threshold</text>
+                  {/* Dynamic Threshold Cutoff Line */}
+                  <line 
+                    x1="0" 
+                    y1={Math.max(40, Math.min(170, 180 - (thresholdCt - 18) * 8))} 
+                    x2="640" 
+                    y2={Math.max(40, Math.min(170, 180 - (thresholdCt - 18) * 8))} 
+                    stroke="#71717a" 
+                    strokeWidth="1.5" 
+                    strokeDasharray="5" 
+                  />
+                  <text 
+                    x="12" 
+                    y={Math.max(34, Math.min(164, 174 - (thresholdCt - 18) * 8))} 
+                    fill="#a1a1aa" 
+                    fontFamily="var(--font-mono)" 
+                    fontSize="10"
+                  >
+                    Clinical Cutoff Threshold (Ct = {thresholdCt.toFixed(1)})
+                  </text>
 
                   {/* Negative Control Line */}
                   <line x1="0" y1="184" x2="640" y2="184" stroke="#3f3f46" strokeWidth="1.2" />
@@ -274,6 +323,27 @@ export default function VirtualLabModal({ isOpen, onClose }) {
                   <span>CYC 30</span>
                   <span>CYC 40</span>
                 </div>
+              </div>
+
+              {/* Threshold Calibration Slider */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', background: 'var(--bg-subtle)', padding: '8px 14px', borderRadius: 'var(--radius-xs)', margin: '12px 0 16px', border: '1px solid var(--border-hairline)' }}>
+                <Sliders size={13} color="var(--text-muted)" />
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--text-muted)' }}>
+                  CALIBRATE CUTOFF:
+                </span>
+                <input 
+                  type="range" 
+                  min="18" 
+                  max="35" 
+                  step="0.5" 
+                  value={thresholdCt} 
+                  onChange={(e) => setThresholdCt(parseFloat(e.target.value))}
+                  style={{ flex: 1, accentColor: 'var(--text-ink)', cursor: 'pointer' }}
+                  title="Adjust Clinical Threshold Cutoff"
+                />
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-ink)' }}>
+                  Ct = {thresholdCt.toFixed(1)}
+                </span>
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -380,11 +450,21 @@ export default function VirtualLabModal({ isOpen, onClose }) {
                   <span>Run Another Specimen</span>
                 </button>
 
-                <div style={{ display: 'flex', gap: '10px' }}>
+                <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                  <button 
+                    className="btn btn-secondary btn-sm" 
+                    onClick={handleDownloadRecord}
+                    id="btn-sim-download"
+                    title="Download Official Clinical Evaluation Record"
+                  >
+                    <Download size={13} />
+                    <span>Download Record (.txt)</span>
+                  </button>
                   <button 
                     className="btn btn-secondary btn-sm" 
                     onClick={() => window.print()}
                     id="btn-sim-print"
+                    title="Print Clinical Evaluation Report"
                   >
                     <Printer size={13} />
                     <span>Print Report</span>

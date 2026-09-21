@@ -5,25 +5,31 @@ import React, { useEffect, useRef } from 'react';
  * Inspired by motion.dev's interactive generative ASCII canvas.
  * Renders an interactive matrix of nucleotide sequences (A, U, G, C), piRNA coordinates,
  * and molecular telemetry that responds to pointer movement with fluid wave displacement.
+ * Features mobile power optimization and viewport intersection observer.
  */
 export default function GenomicAsciiCanvas() {
   const canvasRef = useRef(null);
+  const containerRef = useRef(null);
   const mouseRef = useRef({ x: -1000, y: -1000, targetX: -1000, targetY: -1000 });
+  const isVisibleRef = useRef(true);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    const container = containerRef.current;
+    if (!canvas || !container) return;
     const ctx = canvas.getContext('2d');
     let animationFrameId;
 
     const nucleotides = ['A', 'U', 'G', 'C', '·', '+', '26', '32', 'pi', 'Ct'];
-    const cellSize = 24;
     let cols = 0;
     let rows = 0;
     let grid = [];
 
     const initGrid = () => {
       const rect = canvas.parentElement.getBoundingClientRect();
+      const isMobile = window.innerWidth < 768;
+      const cellSize = isMobile ? 38 : 24; // Lower particle density on mobile for 60fps & battery saving
+
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = rect.width * dpr;
       canvas.height = rect.height * dpr;
@@ -53,24 +59,45 @@ export default function GenomicAsciiCanvas() {
     initGrid();
     window.addEventListener('resize', initGrid);
 
+    // Viewport Intersection Observer: Pause computation when scrolled past hero
+    const observer = new IntersectionObserver(([entry]) => {
+      isVisibleRef.current = entry.isIntersecting;
+    }, { threshold: 0.05 });
+
+    observer.observe(container);
+
     const handleMouseMove = (e) => {
       const rect = canvas.getBoundingClientRect();
       mouseRef.current.targetX = e.clientX - rect.left;
       mouseRef.current.targetY = e.clientY - rect.top;
     };
 
-    const handleMouseLeave = () => {
+    const handleTouchMove = (e) => {
+      if (!e.touches[0]) return;
+      const rect = canvas.getBoundingClientRect();
+      mouseRef.current.targetX = e.touches[0].clientX - rect.left;
+      mouseRef.current.targetY = e.touches[0].clientY - rect.top;
+    };
+
+    const handleLeave = () => {
       mouseRef.current.targetX = -1000;
       mouseRef.current.targetY = -1000;
     };
 
     const parent = canvas.parentElement;
     parent.addEventListener('mousemove', handleMouseMove);
-    parent.addEventListener('mouseleave', handleMouseLeave);
+    parent.addEventListener('mouseleave', handleLeave);
+    parent.addEventListener('touchmove', handleTouchMove, { passive: true });
+    parent.addEventListener('touchend', handleLeave);
 
     let time = 0;
 
     const render = () => {
+      if (!isVisibleRef.current) {
+        animationFrameId = requestAnimationFrame(render);
+        return;
+      }
+
       time += 0.025;
 
       // Smooth mouse interpolation
@@ -83,7 +110,6 @@ export default function GenomicAsciiCanvas() {
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
       const textColor = isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(9, 9, 11, 0.08)';
       const activeColor = isDark ? 'rgba(255, 255, 255, 0.65)' : 'rgba(9, 9, 11, 0.55)';
-      const gridColor = isDark ? 'rgba(255, 255, 255, 0.02)' : 'rgba(0, 0, 0, 0.02)';
 
       ctx.font = '10px "JetBrains Mono", monospace';
       ctx.textAlign = 'center';
@@ -127,7 +153,6 @@ export default function GenomicAsciiCanvas() {
         // Draw character
         const distToMouse = Math.hypot(mouseX - p.x, mouseY - p.y);
         if (distToMouse < interactionRadius) {
-          const intensity = 1 - distToMouse / interactionRadius;
           ctx.fillStyle = activeColor;
           ctx.fillText(p.char, p.x, p.y);
         } else {
@@ -144,13 +169,17 @@ export default function GenomicAsciiCanvas() {
     return () => {
       window.removeEventListener('resize', initGrid);
       parent.removeEventListener('mousemove', handleMouseMove);
-      parent.removeEventListener('mouseleave', handleMouseLeave);
+      parent.removeEventListener('mouseleave', handleLeave);
+      parent.removeEventListener('touchmove', handleTouchMove);
+      parent.removeEventListener('touchend', handleLeave);
+      observer.disconnect();
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
   return (
     <div 
+      ref={containerRef}
       style={{
         position: 'absolute',
         inset: 0,

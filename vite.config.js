@@ -7,5 +7,26 @@ export default defineConfig({
   server: {
     port: 5173,
     host: true
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('@splinetool')) {
+            return 'vendor-spline';
+          }
+          if (id.includes('motion')) {
+            return 'vendor-motion';
+          }
+          if (id.includes('lucide-react')) {
+            return 'vendor-icons';
+          }
+          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
+            return 'vendor-react';
+          }
+        }
+      }
+    },
+    chunkSizeWarningLimit: 1200
   }
 })
