@@ -599,7 +599,7 @@ export default function SplinePhaseBrowser({ activeStepIndex, setActiveStepIndex
               3D SPLINE TRAJECTORY ENGINE
             </span>
           </div>
-          <span style={{ color: 'var(--text-caption)' }}>|</span>
+          <span style={{ color: 'var(--text-muted)' }}>|</span>
           <span style={{ color: 'var(--text-muted)' }}>
             CAM: [{telemetry.camX}, {telemetry.camY}, {telemetry.camZ}]
           </span>
@@ -753,7 +753,7 @@ export default function SplinePhaseBrowser({ activeStepIndex, setActiveStepIndex
                 High-fidelity interactive 3D Spline Cloud CAD models of the IndZita Automated Diagnostic Cassette and Organoid Bioreactor Docking Nest are currently in development.
               </p>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '16px', fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--text-caption)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '16px', fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 600 }}>
                 <span>SCHEDULED: Q4 2026</span>
                 <span>•</span>
                 <span>FULL WEBGPU EMBED</span>
@@ -862,7 +862,7 @@ export default function SplinePhaseBrowser({ activeStepIndex, setActiveStepIndex
               <span className="step-index-mono" style={{ fontSize: '0.72rem' }}>
                 ACTIVE NODE // PHASE 0{activeStepIndex + 1}
               </span>
-              <span style={{ color: 'var(--text-caption)' }}>•</span>
+              <span style={{ color: 'var(--text-muted)' }}>•</span>
               <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--text-muted)' }}>
                 {activeStep.category}
               </span>

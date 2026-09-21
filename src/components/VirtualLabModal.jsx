@@ -268,7 +268,7 @@ Status:            CLINICALLY VERIFIED
 
               {/* Minimalist Grayscale qPCR Graph Canvas */}
               <div className="qpcr-clean-canvas">
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: '#71717a', marginBottom: '8px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: '#a1a1aa', marginBottom: '8px' }}>
                   <span>FLUORESCENCE (RFU × 10³)</span>
                   <span style={{ color: '#ffffff' }}>THRESHOLD: Ct = {thresholdCt.toFixed(1)}</span>
                 </div>
@@ -285,7 +285,7 @@ Status:            CLINICALLY VERIFIED
                     y1={Math.max(40, Math.min(170, 180 - (thresholdCt - 18) * 8))} 
                     x2="640" 
                     y2={Math.max(40, Math.min(170, 180 - (thresholdCt - 18) * 8))} 
-                    stroke="#71717a" 
+                    stroke="#a1a1aa" 
                     strokeWidth="1.5" 
                     strokeDasharray="5" 
                   />
@@ -301,7 +301,7 @@ Status:            CLINICALLY VERIFIED
 
                   {/* Negative Control Line */}
                   <line x1="0" y1="184" x2="640" y2="184" stroke="#3f3f46" strokeWidth="1.2" />
-                  <text x="520" y="178" fill="#52525b" fontFamily="var(--font-mono)" fontSize="10">Internal Neg. Control</text>
+                  <text x="520" y="178" fill="#a1a1aa" fontFamily="var(--font-mono)" fontSize="10">Internal Neg. Control</text>
 
                   {/* Active Amplification Curve */}
                   {simCycle > 0 && (
@@ -316,7 +316,7 @@ Status:            CLINICALLY VERIFIED
                   )}
                 </svg>
 
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: '#71717a', marginTop: '6px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: '#a1a1aa', marginTop: '6px' }}>
                   <span>CYC 0</span>
                   <span>CYC 10</span>
                   <span>CYC 20</span>
@@ -373,7 +373,7 @@ Status:            CLINICALLY VERIFIED
                     <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.78rem', fontWeight: 700 }}>
                       [STATUS: VERIFIED]
                     </div>
-                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: '#71717a' }}>
+                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: '#52525b' }}>
                       REF: {sampleId}-EVAL
                     </div>
                   </div>
@@ -381,15 +381,15 @@ Status:            CLINICALLY VERIFIED
 
                 <div className="sim-report-meta-grid">
                   <div>
-                    <div style={{ fontSize: '0.7rem', color: '#71717a', textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>Specimen ID</div>
+                    <div style={{ fontSize: '0.7rem', color: '#52525b', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>Specimen ID</div>
                     <div style={{ fontWeight: 700, fontSize: '0.9rem' }}>{sampleId}</div>
                   </div>
                   <div>
-                    <div style={{ fontSize: '0.7rem', color: '#71717a', textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>Assay Panel</div>
+                    <div style={{ fontSize: '0.7rem', color: '#52525b', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>Assay Panel</div>
                     <div style={{ fontWeight: 700, fontSize: '0.9rem' }}>{activePreset.panelName}</div>
                   </div>
                   <div>
-                    <div style={{ fontSize: '0.7rem', color: '#71717a', textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>Sample Format</div>
+                    <div style={{ fontSize: '0.7rem', color: '#52525b', textTransform: 'uppercase', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>Sample Format</div>
                     <div style={{ fontWeight: 700, fontSize: '0.9rem' }}>{activePreset.sampleType}</div>
                   </div>
                 </div>
@@ -432,12 +432,12 @@ Status:            CLINICALLY VERIFIED
                   <div style={{ fontWeight: 700, fontSize: '0.84rem', color: '#09090b', marginBottom: '2px' }}>
                     Clinical Actionable Interpretation:
                   </div>
-                  <div style={{ fontSize: '0.84rem', color: '#3f3f46' }}>
+                  <div style={{ fontSize: '0.84rem', color: '#27272a' }}>
                     {activePreset.recommendation}
                   </div>
                 </div>
 
-                <div className="sim-report-footer" style={{ marginTop: '20px', paddingTop: '12px', borderTop: '1px solid #e4e4e7', display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', color: '#71717a', flexWrap: 'wrap', gap: '8px' }}>
+                <div className="sim-report-footer" style={{ marginTop: '20px', paddingTop: '12px', borderTop: '1px solid #e4e4e7', display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', color: '#52525b', flexWrap: 'wrap', gap: '8px' }}>
                   <span>Validation partner: BRIC - RGCB / Karkinos Multi-Center Cohort</span>
                   <span>Instrumentation: IndZita Automated Platform v2.6</span>
                 </div>

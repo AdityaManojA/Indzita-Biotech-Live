@@ -98,7 +98,7 @@ export default function LeadershipTeam() {
                 </span>
               </div>
 
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--text-caption)', marginBottom: '4px' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 600, letterSpacing: '0.05em', marginBottom: '4px' }}>
                 DIRECTOR
               </div>
               <h3 style={{ fontSize: '1.28rem', marginBottom: '4px' }}>{member.name}</h3>

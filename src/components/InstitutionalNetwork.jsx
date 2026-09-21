@@ -35,7 +35,7 @@ export default function InstitutionalNetwork() {
                 />
               </div>
 
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--text-caption)', marginBottom: '6px' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 600, letterSpacing: '0.05em', marginBottom: '6px' }}>
                 INSTITUTION 0{idx + 1}
               </div>
               <h3 style={{ fontSize: '1.25rem', marginBottom: '8px' }}>{partner.name}</h3>
