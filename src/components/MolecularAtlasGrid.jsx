@@ -108,16 +108,28 @@ export default function MolecularAtlasGrid() {
   const [activePanel, setActivePanel] = useState('cervical');
   const [assayRunning, setAssayRunning] = useState(false);
   const [signalIntensity, setSignalIntensity] = useState(4.6);
+  const [laserScanX, setLaserScanX] = useState(0);
 
   const runPanelAssay = () => {
     if (assayRunning) return;
     setAssayRunning(true);
     setSignalIntensity(1.0);
+    setLaserScanX(15);
+
+    const interval = setInterval(() => {
+      setLaserScanX(prev => {
+        if (prev >= 230) {
+          clearInterval(interval);
+          return 0;
+        }
+        return prev + 14;
+      });
+    }, 40);
 
     setTimeout(() => {
       setSignalIntensity(activePanel === 'cervical' ? 4.6 : 3.8);
       setAssayRunning(false);
-    }, 900);
+    }, 850);
   };
 
   return (
@@ -494,45 +506,150 @@ export default function MolecularAtlasGrid() {
                 <div className="atlas-oscilloscope-box">
                   <div className="atlas-trace-top">
                     <span style={{ color: '#a1a1aa' }}>DUAL-PANEL OPTICAL EMISSION TRACE</span>
-                    <span style={{ color: '#06b6d4', fontWeight: 700 }}>
-                      SIGNAL: +{signalIntensity}x {activePanel === 'cervical' ? 'CC-piRNA' : 'PD-piRNA'}
+                    <span style={{ color: activePanel === 'cervical' ? '#38bdf8' : '#10b981', fontWeight: 700 }}>
+                      {assayRunning 
+                        ? 'ACQUIRING FLUORESCENCE...' 
+                        : `SIGNAL: +${signalIntensity}x ${activePanel === 'cervical' ? 'CC-piRNA' : 'PD-piRNA'}`}
                     </span>
                   </div>
 
                   <svg width="100%" height="64" viewBox="0 0 240 64" preserveAspectRatio="none">
+                    <defs>
+                      <linearGradient id="cell05CervicalGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.35" />
+                        <stop offset="100%" stopColor="#38bdf8" stopOpacity="0.0" />
+                      </linearGradient>
+                      <linearGradient id="cell05ParkinsonGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stopColor="#10b981" stopOpacity="0.35" />
+                        <stop offset="100%" stopColor="#10b981" stopOpacity="0.0" />
+                      </linearGradient>
+                    </defs>
+
                     {/* Baseline Noise Lines */}
                     <line x1="0" y1="18" x2="240" y2="18" stroke="#27272a" strokeDasharray="3" />
                     <line x1="0" y1="48" x2="240" y2="48" stroke="#27272a" strokeDasharray="3" />
 
-                    {/* Reference Channel Trace (Flatline RNU6) */}
-                    <path d="M 10 46 L 230 46" fill="none" stroke="#52525b" strokeWidth="1" strokeDasharray="4 2" />
+                    {/* Baseline Axis */}
+                    <line x1="10" y1="48" x2="230" y2="48" stroke="rgba(255, 255, 255, 0.15)" strokeWidth="1" />
 
-                    {/* Active Dual-Panel Fluorescence Emission Curve */}
-                    <path
-                      d={assayRunning 
-                        ? "M 10 46 L 80 46 Q 130 46, 150 14 Q 170 46, 230 46"
-                        : "M 10 46 L 80 46 Q 130 46, 150 20 Q 170 46, 230 46"}
-                      fill="none"
-                      stroke="#06b6d4"
-                      strokeWidth="2.2"
-                      style={{ transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)' }}
-                    />
+                    {/* Cervical Panel: piRNA-142 Peak (λ 520nm, FAM channel) */}
+                    {activePanel === 'cervical' && (
+                      <g>
+                        {/* Reference Channel Trace (RNU6 internal control) */}
+                        <path
+                          d="M 168 48 C 174 48, 178 48, 181 38 C 183 33, 184 30, 185 30 C 186 30, 187 33, 189 38 C 192 48, 196 48, 202 48"
+                          fill="none"
+                          stroke="rgba(255, 255, 255, 0.35)"
+                          strokeWidth="1.2"
+                          strokeDasharray="3 2"
+                        />
+                        <text x="185" y="25" fill="rgba(255, 255, 255, 0.45)" fontSize="5.5" fontFamily="var(--font-mono)" textAnchor="middle">
+                          REF RNU6
+                        </text>
 
-                    {/* Emission Peak Fill Area */}
-                    <path 
-                      d={assayRunning 
-                        ? "M 110 46 Q 150 14, 190 46 Z" 
-                        : "M 110 46 Q 150 20, 190 46 Z"} 
-                      fill="rgba(6, 182, 212, 0.25)" 
-                    />
+                        {/* Peak Fill Area */}
+                        <path 
+                          d={assayRunning 
+                            ? "M 75 48 C 98 48, 116 48, 126 26 C 130 16, 133 11, 135 11 C 137 11, 140 16, 144 26 C 154 48, 172 48, 195 48 Z" 
+                            : "M 75 48 C 98 48, 116 48, 126 30 C 130 22, 133 17, 135 17 C 137 17, 140 22, 144 30 C 154 48, 172 48, 195 48 Z"} 
+                          fill="url(#cell05CervicalGrad)"
+                          style={{ transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)' }}
+                        />
 
-                    <text x="150" y="32" fill="#67e8f9" fontSize="7" fontFamily="var(--font-mono)" textAnchor="middle" fontWeight="bold">
-                      {activePanel === 'cervical' ? 'piRNA-142 PEAK' : 'piRNA-708 PEAK'}
-                    </text>
+                        {/* Main Smooth Gaussian Fluorescence Emission Curve */}
+                        <path
+                          d={assayRunning 
+                            ? "M 10 48 L 75 48 C 98 48, 116 48, 126 26 C 130 16, 133 11, 135 11 C 137 11, 140 16, 144 26 C 154 48, 172 48, 195 48 L 230 48"
+                            : "M 10 48 L 75 48 C 98 48, 116 48, 126 30 C 130 22, 133 17, 135 17 C 137 17, 140 22, 144 30 C 154 48, 172 48, 195 48 L 230 48"}
+                          fill="none"
+                          stroke="#38bdf8"
+                          strokeWidth="2.2"
+                          style={{ transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)' }}
+                        />
+
+                        {/* Peak Dropdown Hairline & Apex Dot */}
+                        <line x1="135" y1={assayRunning ? 11 : 17} x2="135" y2="48" stroke="rgba(56, 189, 248, 0.35)" strokeDasharray="2 2" />
+                        <circle cx="135" cy={assayRunning ? 11 : 17} r="2.5" fill="#38bdf8" />
+
+                        {/* Peak Label Positioned Cleanly Above Curve */}
+                        <text x="135" y="8" fill="#38bdf8" fontSize="7" fontFamily="var(--font-mono)" textAnchor="middle" fontWeight="bold">
+                          piRNA-142 (λ 520nm)
+                        </text>
+                      </g>
+                    )}
+
+                    {/* Parkinson's Panel: piRNA-708 Peak (λ 560nm, HEX channel) */}
+                    {activePanel === 'parkinson' && (
+                      <g>
+                        {/* Reference Channel Trace (GAPDH internal control) */}
+                        <path
+                          d="M 68 48 C 74 48, 78 48, 81 38 C 83 33, 84 30, 85 30 C 86 30, 87 33, 89 38 C 92 48, 96 48, 102 48"
+                          fill="none"
+                          stroke="rgba(255, 255, 255, 0.35)"
+                          strokeWidth="1.2"
+                          strokeDasharray="3 2"
+                        />
+                        <text x="85" y="25" fill="rgba(255, 255, 255, 0.45)" fontSize="5.5" fontFamily="var(--font-mono)" textAnchor="middle">
+                          GAPDH REF
+                        </text>
+
+                        {/* Peak Fill Area */}
+                        <path 
+                          d={assayRunning 
+                            ? "M 90 48 C 112 48, 130 48, 140 26 C 144 16, 147 11, 150 11 C 153 11, 156 16, 160 26 C 170 48, 188 48, 210 48 Z" 
+                            : "M 90 48 C 112 48, 130 48, 140 30 C 144 22, 147 17, 150 17 C 153 17, 156 22, 160 30 C 170 48, 188 48, 210 48 Z"} 
+                          fill="url(#cell05ParkinsonGrad)"
+                          style={{ transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)' }}
+                        />
+
+                        {/* Main Smooth Gaussian Fluorescence Emission Curve */}
+                        <path
+                          d={assayRunning 
+                            ? "M 10 48 L 90 48 C 112 48, 130 48, 140 26 C 144 16, 147 11, 150 11 C 153 11, 156 16, 160 26 C 170 48, 188 48, 210 48 L 230 48"
+                            : "M 10 48 L 90 48 C 112 48, 130 48, 140 30 C 144 22, 147 17, 150 17 C 153 17, 156 22, 160 30 C 170 48, 188 48, 210 48 L 230 48"}
+                          fill="none"
+                          stroke="#10b981"
+                          strokeWidth="2.2"
+                          style={{ transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)' }}
+                        />
+
+                        {/* Peak Dropdown Hairline & Apex Dot */}
+                        <line x1="150" y1={assayRunning ? 11 : 17} x2="150" y2="48" stroke="rgba(16, 185, 129, 0.35)" strokeDasharray="2 2" />
+                        <circle cx="150" cy={assayRunning ? 11 : 17} r="2.5" fill="#10b981" />
+
+                        {/* Peak Label Positioned Cleanly Above Curve */}
+                        <text x="150" y="8" fill="#10b981" fontSize="7" fontFamily="var(--font-mono)" textAnchor="middle" fontWeight="bold">
+                          piRNA-708 (λ 560nm)
+                        </text>
+                      </g>
+                    )}
+
+                    {/* Active Laser Scanning Sweep */}
+                    {laserScanX > 0 && (
+                      <g>
+                        <line
+                          x1={laserScanX}
+                          y1="6"
+                          x2={laserScanX}
+                          y2="54"
+                          stroke={activePanel === 'cervical' ? '#38bdf8' : '#10b981'}
+                          strokeWidth="1.5"
+                          opacity="0.9"
+                        />
+                        <rect
+                          x={Math.max(10, laserScanX - 12)}
+                          y="6"
+                          width="12"
+                          height="48"
+                          fill={activePanel === 'cervical' ? '#38bdf8' : '#10b981'}
+                          opacity="0.16"
+                        />
+                      </g>
+                    )}
                   </svg>
 
                   <div className="atlas-trace-bottom">
-                    <span>PANEL: {activePanel === 'cervical' ? 'CERVICAL' : "PARKINSON'S"}</span>
+                    <span>PANEL: {activePanel === 'cervical' ? 'CERVICAL (ONCO-PANEL)' : "PARKINSON'S (NEURO-PANEL)"}</span>
                     <span>CARRYOVER: ZERO CONTAMINATION</span>
                   </div>
                 </div>
@@ -541,13 +658,13 @@ export default function MolecularAtlasGrid() {
                   <div className="atlas-mini-pills">
                     <button
                       className={`atlas-mini-pill ${activePanel === 'cervical' ? 'active' : ''}`}
-                      onClick={() => setActivePanel('cervical')}
+                      onClick={() => { setActivePanel('cervical'); setSignalIntensity(4.6); }}
                     >
                       Cervical Panel
                     </button>
                     <button
                       className={`atlas-mini-pill ${activePanel === 'parkinson' ? 'active' : ''}`}
-                      onClick={() => setActivePanel('parkinson')}
+                      onClick={() => { setActivePanel('parkinson'); setSignalIntensity(3.8); }}
                     >
                       Parkinson's Panel
                     </button>
@@ -558,7 +675,7 @@ export default function MolecularAtlasGrid() {
                     onClick={runPanelAssay}
                     title="Simulate Automated Assay Processing"
                   >
-                    <Play size={11} color="#06b6d4" fill="#06b6d4" />
+                    <Play size={11} color={activePanel === 'cervical' ? '#38bdf8' : '#10b981'} fill={activePanel === 'cervical' ? '#38bdf8' : '#10b981'} />
                     <span>Run {activePanel === 'cervical' ? 'Cervical' : "Parkinson's"} Scan</span>
                   </button>
                 </div>
