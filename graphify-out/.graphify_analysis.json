@@ -1,0 +1,307 @@
+{
+  "communities": {
+    "0": [
+      "package",
+      "package_dependencies",
+      "package_dependencies_lucide_react",
+      "package_dependencies_motion",
+      "package_dependencies_react",
+      "package_dependencies_react_dom",
+      "package_dependencies_splinetool_react_spline",
+      "package_dependencies_splinetool_runtime",
+      "package_name",
+      "package_private",
+      "package_type",
+      "package_version",
+      "ref_splinetool_runtime",
+      "ref_types_react",
+      "ref_types_react_dom",
+      "ref_vite",
+      "ref_vitejs_plugin_react",
+      "vite_config",
+      "vite_config_manualchunks"
+    ],
+    "1": [
+      "data_ani_v_das",
+      "data_automated_diagnostic_platform",
+      "data_bric_rgcb",
+      "data_indzita_biotech",
+      "data_karkinos_healthcare",
+      "data_maha_medtech_grant",
+      "data_organoid_bioreactor",
+      "data_pirna_diagnostic_kit",
+      "images_graph_png",
+      "images_kit_png",
+      "images_machine_png",
+      "images_product_images_compact_diagnostic_system_device_png",
+      "images_report_png",
+      "images_sample_png",
+      "index_html"
+    ],
+    "2": [
+      "react_spline",
+      "ref_splinetool_react_spline",
+      "src_components_molecularpipeline",
+      "src_components_molecularpipeline_molecularpipeline",
+      "src_components_phasegraphiccurves",
+      "src_components_phasegraphiccurves_phasecurvethumb",
+      "src_components_phasegraphiccurves_phasecurveviewer",
+      "src_components_splinephasebrowser",
+      "src_components_splinephasebrowser_splinephasebrowser",
+      "src_components_splinephasebrowser_splinephasebrowser_getsplinepoint",
+      "src_data_indzitadata_workflowsteps"
+    ],
+    "3": [
+      "public_manifest",
+      "public_manifest_background_color",
+      "public_manifest_display",
+      "public_manifest_icons",
+      "public_manifest_name",
+      "public_manifest_orientation",
+      "public_manifest_short_name",
+      "public_manifest_start_url",
+      "public_manifest_theme_color"
+    ],
+    "4": [
+      "src_app",
+      "src_components_contactterminal",
+      "src_components_contactterminal_contactterminal",
+      "src_components_leadershipteam_leadershipteam",
+      "src_components_newsbanner",
+      "src_components_newsbanner_newsbanner",
+      "src_components_pressreleasearticle",
+      "src_components_pressreleasearticle_pressreleasearticle",
+      "src_data_indzitadata_pressarticledata"
+    ],
+    "5": [
+      "ref_motion",
+      "ref_react",
+      "src_components_genomicasciicanvas",
+      "src_components_genomicasciicanvas_genomicasciicanvas",
+      "src_components_hero",
+      "src_components_hero_hero",
+      "src_components_molecularatlasgrid",
+      "src_components_molecularatlasgrid_molecularatlasgrid"
+    ],
+    "6": [
+      "src_components_institutionalnetwork",
+      "src_components_institutionalnetwork_institutionalnetwork",
+      "src_components_leadershipteam",
+      "src_data_indzitadata",
+      "src_data_indzitadata_institutionalpartners",
+      "src_data_indzitadata_leadershipteam",
+      "src_data_indzitadata_researchcollaborators"
+    ],
+    "7": [
+      "ref_lucide_react",
+      "src_components_footer",
+      "src_components_footer_footer",
+      "src_components_header",
+      "src_components_header_header",
+      "src_data_indzitadata_companydata"
+    ],
+    "8": [
+      "package_devdependencies",
+      "package_devdependencies_types_react",
+      "package_devdependencies_types_react_dom",
+      "package_devdependencies_vite",
+      "package_devdependencies_vitejs_plugin_react"
+    ],
+    "9": [
+      "package_scripts",
+      "package_scripts_build",
+      "package_scripts_deploy",
+      "package_scripts_dev",
+      "package_scripts_preview"
+    ],
+    "10": [
+      "indzita_biotech",
+      "public_images_logo_indzita_logo",
+      "public_images_product_images_compact_diagnostic_system_device",
+      "public_images_product_images_intelligent_sample_processing_device_right"
+    ],
+    "11": [
+      "ref_react_dom",
+      "src_app_app",
+      "src_index",
+      "src_main"
+    ],
+    "12": [
+      "src_components_bioreactorsection",
+      "src_components_bioreactorsection_bioreactorsection",
+      "src_data_indzitadata_bioreactordata"
+    ],
+    "13": [
+      "src_components_diagnosticplatform",
+      "src_components_diagnosticplatform_diagnosticplatform",
+      "src_data_indzitadata_diagnosticplatformdata"
+    ],
+    "14": [
+      "src_components_virtuallabmodal",
+      "src_components_virtuallabmodal_virtuallabmodal",
+      "src_data_indzitadata_simulationpresets"
+    ],
+    "15": [
+      "nimhans",
+      "public_images_collaborators_nimhans"
+    ],
+    "16": [
+      "public_images_product_images_bioreactor",
+      "public_images_product_images_controller"
+    ],
+    "17": [
+      "public_images_team_team"
+    ]
+  },
+  "cohesion": {
+    "0": 0.1111111111111111,
+    "1": 0.1523809523809524,
+    "2": 0.3090909090909091,
+    "3": 0.2222222222222222,
+    "4": 0.3333333333333333,
+    "5": 0.35714285714285715,
+    "6": 0.42857142857142855,
+    "7": 0.4,
+    "8": 0.4,
+    "9": 0.4,
+    "10": 0.5,
+    "11": 0.5,
+    "12": 0.6666666666666666,
+    "13": 0.6666666666666666,
+    "14": 0.6666666666666666,
+    "15": 1.0,
+    "16": 1.0,
+    "17": 1.0
+  },
+  "gods": [
+    {
+      "id": "ref_react",
+      "label": "react",
+      "degree": 19
+    },
+    {
+      "id": "ref_lucide_react",
+      "label": "lucide-react",
+      "degree": 15
+    },
+    {
+      "id": "data_indzita_biotech",
+      "label": "IndZita Biotech Pvt. Ltd.",
+      "degree": 8
+    },
+    {
+      "id": "src_data_indzitadata_companydata",
+      "label": "companyData",
+      "degree": 7
+    },
+    {
+      "id": "data_pirna_diagnostic_kit",
+      "label": "PCR Kit for Cervical Cancer Detection",
+      "degree": 6
+    },
+    {
+      "id": "package_scripts",
+      "label": "scripts",
+      "degree": 5
+    },
+    {
+      "id": "src_components_splinephasebrowser_splinephasebrowser",
+      "label": "SplinePhaseBrowser()",
+      "degree": 4
+    },
+    {
+      "id": "src_components_phasegraphiccurves_phasecurvethumb",
+      "label": "PhaseCurveThumb()",
+      "degree": 3
+    },
+    {
+      "id": "src_components_phasegraphiccurves_phasecurveviewer",
+      "label": "PhaseCurveViewer()",
+      "degree": 3
+    },
+    {
+      "id": "src_data_indzitadata_workflowsteps",
+      "label": "workflowSteps",
+      "degree": 3
+    }
+  ],
+  "surprises": [
+    {
+      "source": "piRNA Amplification Graph",
+      "target": "PCR Kit for Cervical Cancer Detection",
+      "source_files": [
+        "Images/graph.png",
+        "data.md"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "crosses file types (doc ↔ image); connects across different repos/directories; peripheral node `piRNA Amplification Graph` unexpectedly reaches hub `PCR Kit for Cervical Cancer Detection`"
+    },
+    {
+      "source": "piRNA Isolation Kit",
+      "target": "PCR Kit for Cervical Cancer Detection",
+      "source_files": [
+        "Images/kit.png",
+        "data.md"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "crosses file types (doc ↔ image); connects across different repos/directories; peripheral node `piRNA Isolation Kit` unexpectedly reaches hub `PCR Kit for Cervical Cancer Detection`"
+    },
+    {
+      "source": "QPCR Analysis Machine",
+      "target": "PCR Kit for Cervical Cancer Detection",
+      "source_files": [
+        "Images/machine.png",
+        "data.md"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "crosses file types (doc ↔ image); connects across different repos/directories; peripheral node `QPCR Analysis Machine` unexpectedly reaches hub `PCR Kit for Cervical Cancer Detection`"
+    },
+    {
+      "source": "Clinical Report",
+      "target": "PCR Kit for Cervical Cancer Detection",
+      "source_files": [
+        "Images/report.png",
+        "data.md"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "crosses file types (doc ↔ image); connects across different repos/directories; peripheral node `Clinical Report` unexpectedly reaches hub `PCR Kit for Cervical Cancer Detection`"
+    },
+    {
+      "source": "Sample Collection",
+      "target": "PCR Kit for Cervical Cancer Detection",
+      "source_files": [
+        "Images/sample.png",
+        "data.md"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "crosses file types (doc ↔ image); connects across different repos/directories; peripheral node `Sample Collection` unexpectedly reaches hub `PCR Kit for Cervical Cancer Detection`"
+    }
+  ],
+  "questions": [
+    {
+      "type": "bridge_node",
+      "question": "Why does `react` connect `react` to `Project Dependencies and Metadata`, `Molecular Visualization Components`, `App.jsx`, `indzitaData.js`, `lucide-react`, `main.jsx`, `BioreactorSection.jsx`, `DiagnosticPlatform.jsx`, `VirtualLabModal.jsx`?",
+      "why": "High betweenness centrality (0.150) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `lucide-react` connect `lucide-react` to `Project Dependencies and Metadata`, `Molecular Visualization Components`, `App.jsx`, `react`, `indzitaData.js`, `BioreactorSection.jsx`, `DiagnosticPlatform.jsx`, `VirtualLabModal.jsx`?",
+      "why": "High betweenness centrality (0.088) - this node is a cross-community bridge."
+    },
+    {
+      "type": "isolated_nodes",
+      "question": "What connects `lucide-react`, `motion`, `react` to the rest of the system?",
+      "why": "45 weakly-connected nodes found - possible documentation gaps or missing edges."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `Project Dependencies and Metadata` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.1111111111111111 - nodes in this community are weakly interconnected."
+    }
+  ]
+}

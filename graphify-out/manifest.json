@@ -1,0 +1,230 @@
+{
+  "firebase.json": {
+    "mtime": 1790000573.8419428,
+    "seen": 1790017859.0333085,
+    "ast_hash": "25851a768ac191ccaab6cfddb29ce73a",
+    "semantic_hash": "25851a768ac191ccaab6cfddb29ce73a"
+  },
+  "package.json": {
+    "mtime": 1790000587.4509232,
+    "seen": 1790017859.0333085,
+    "ast_hash": "768bc9a71171122783bf71c81f7f5712",
+    "semantic_hash": "768bc9a71171122783bf71c81f7f5712"
+  },
+  "public/manifest.json": {
+    "mtime": 1790002162.8870058,
+    "seen": 1790017859.0333085,
+    "ast_hash": "f118aa093ff1c3eb3591eae4ab2e88f4",
+    "semantic_hash": "f118aa093ff1c3eb3591eae4ab2e88f4"
+  },
+  "src/App.jsx": {
+    "mtime": 1789999644.3580966,
+    "seen": 1790017859.0333085,
+    "ast_hash": "449f4b055389a4bc8b23264f5c05c275",
+    "semantic_hash": "449f4b055389a4bc8b23264f5c05c275"
+  },
+  "src/components/BioreactorSection.jsx": {
+    "mtime": 1789998757.0890365,
+    "seen": 1790017859.0333085,
+    "ast_hash": "3889a8d08aaeca1dc85f197b086b38b7",
+    "semantic_hash": "3889a8d08aaeca1dc85f197b086b38b7"
+  },
+  "src/components/ContactTerminal.jsx": {
+    "mtime": 1790000216.4197254,
+    "seen": 1790017859.0333085,
+    "ast_hash": "032d618895ced8423c97c5d711f05160",
+    "semantic_hash": "032d618895ced8423c97c5d711f05160"
+  },
+  "src/components/DiagnosticPlatform.jsx": {
+    "mtime": 1789981234.8803148,
+    "seen": 1790017859.0333085,
+    "ast_hash": "524ed67bdfe7d6019395bdd99b23aeda",
+    "semantic_hash": "524ed67bdfe7d6019395bdd99b23aeda"
+  },
+  "src/components/Footer.jsx": {
+    "mtime": 1789999610.9346063,
+    "seen": 1790017859.0333085,
+    "ast_hash": "da520da968af659bd62c53126c625f02",
+    "semantic_hash": "da520da968af659bd62c53126c625f02"
+  },
+  "src/components/GenomicAsciiCanvas.jsx": {
+    "mtime": 1790002116.9265163,
+    "seen": 1790017859.0333085,
+    "ast_hash": "37d0d4cdde372f3cadff9452a79c19e2",
+    "semantic_hash": "37d0d4cdde372f3cadff9452a79c19e2"
+  },
+  "src/components/Header.jsx": {
+    "mtime": 1790007187.3274682,
+    "seen": 1790017859.0333085,
+    "ast_hash": "27b770a7c6d04da530e077f2c9df701d",
+    "semantic_hash": "27b770a7c6d04da530e077f2c9df701d"
+  },
+  "src/components/Hero.jsx": {
+    "mtime": 1789998052.4668293,
+    "seen": 1790017859.0333085,
+    "ast_hash": "92dba9f1e64f27dc11838d164f862285",
+    "semantic_hash": "92dba9f1e64f27dc11838d164f862285"
+  },
+  "src/components/InstitutionalNetwork.jsx": {
+    "mtime": 1790015625.2165904,
+    "seen": 1790017859.0333085,
+    "ast_hash": "677845331d6cb502b0cdc4ebd07d1113",
+    "semantic_hash": "677845331d6cb502b0cdc4ebd07d1113"
+  },
+  "src/components/LeadershipTeam.jsx": {
+    "mtime": 1790015573.5662043,
+    "seen": 1790017859.0333085,
+    "ast_hash": "57248b00e8ce2f2ce933028ba4661041",
+    "semantic_hash": "57248b00e8ce2f2ce933028ba4661041"
+  },
+  "src/components/MolecularAtlasGrid.jsx": {
+    "mtime": 1790007393.5682561,
+    "seen": 1790017859.0333085,
+    "ast_hash": "7a303e6837662f3967eaa28e255681bb",
+    "semantic_hash": "7a303e6837662f3967eaa28e255681bb"
+  },
+  "src/components/MolecularPipeline.jsx": {
+    "mtime": 1790013951.715819,
+    "seen": 1790017859.0333085,
+    "ast_hash": "2ed52e9fad77cebf782247b911ca7cd6",
+    "semantic_hash": "2ed52e9fad77cebf782247b911ca7cd6"
+  },
+  "src/components/NewsBanner.jsx": {
+    "mtime": 1790000226.7224567,
+    "seen": 1790017859.0333085,
+    "ast_hash": "6efe64887ee5c73fec65729d3f1805d2",
+    "semantic_hash": "6efe64887ee5c73fec65729d3f1805d2"
+  },
+  "src/components/PhaseGraphicCurves.jsx": {
+    "mtime": 1790006866.840907,
+    "seen": 1790017859.0333085,
+    "ast_hash": "7443a0593e56048d67260d1a432e53ac",
+    "semantic_hash": "7443a0593e56048d67260d1a432e53ac"
+  },
+  "src/components/PressReleaseArticle.jsx": {
+    "mtime": 1790000241.0851707,
+    "seen": 1790017859.0333085,
+    "ast_hash": "bbb55aabea8b40ddf9e8fdb2edc5cde4",
+    "semantic_hash": "bbb55aabea8b40ddf9e8fdb2edc5cde4"
+  },
+  "src/components/SplinePhaseBrowser.jsx": {
+    "mtime": 1790015634.8648436,
+    "seen": 1790017859.0333085,
+    "ast_hash": "3958f367e23bc6c7d29d19c7a928a629",
+    "semantic_hash": "3958f367e23bc6c7d29d19c7a928a629"
+  },
+  "src/components/VirtualLabModal.jsx": {
+    "mtime": 1790015649.127074,
+    "seen": 1790017859.0333085,
+    "ast_hash": "fb2a0a944f2b2bd8d3b87e00ed1ae324",
+    "semantic_hash": "fb2a0a944f2b2bd8d3b87e00ed1ae324"
+  },
+  "src/data/indzitaData.js": {
+    "mtime": 1789999375.3528693,
+    "seen": 1790017859.0333085,
+    "ast_hash": "041a973402822431a7b5bbdf27cdefa6",
+    "semantic_hash": "041a973402822431a7b5bbdf27cdefa6"
+  },
+  "src/main.jsx": {
+    "mtime": 1789979987.6325622,
+    "seen": 1790017859.0333085,
+    "ast_hash": "89fe151564e32a66fc2328f0fc92c486",
+    "semantic_hash": "89fe151564e32a66fc2328f0fc92c486"
+  },
+  "vite.config.js": {
+    "mtime": 1790002078.491364,
+    "seen": 1790017859.0333085,
+    "ast_hash": "f98f1db774f3c3f8954040e00003e847",
+    "semantic_hash": "f98f1db774f3c3f8954040e00003e847"
+  },
+  "data.md": {
+    "mtime": 1789999339.7857883,
+    "seen": 1790017859.0333085,
+    "ast_hash": "533ad996c040c1378d65a1e582bf7967",
+    "semantic_hash": "533ad996c040c1378d65a1e582bf7967"
+  },
+  "index.html": {
+    "mtime": 1790002157.2056563,
+    "seen": 1790017859.0333085,
+    "ast_hash": "88153be3e526885e0bc7139e9b182fb3",
+    "semantic_hash": "88153be3e526885e0bc7139e9b182fb3"
+  },
+  "Images/Product images/Compact Diagnostic System/device.png": {
+    "mtime": 1789979270.1221912,
+    "seen": 1790017859.0333085,
+    "ast_hash": "66a9cc8b3d9569e3688fc37da30615b4",
+    "semantic_hash": "66a9cc8b3d9569e3688fc37da30615b4"
+  },
+  "Images/graph.png": {
+    "mtime": 1789979214.8463552,
+    "seen": 1790017859.0333085,
+    "ast_hash": "bb1aecee5b6d38f1b708d57ef5cef7e3",
+    "semantic_hash": "bb1aecee5b6d38f1b708d57ef5cef7e3"
+  },
+  "Images/kit.png": {
+    "mtime": 1789979211.6402173,
+    "seen": 1790017859.0333085,
+    "ast_hash": "84dc9263c46d407a98297dab769a2938",
+    "semantic_hash": "84dc9263c46d407a98297dab769a2938"
+  },
+  "Images/machine.png": {
+    "mtime": 1789979218.1071794,
+    "seen": 1790017859.0333085,
+    "ast_hash": "155da1c99aa1fea0b8f168846af73a07",
+    "semantic_hash": "155da1c99aa1fea0b8f168846af73a07"
+  },
+  "Images/report.png": {
+    "mtime": 1789979221.525921,
+    "seen": 1790017859.0333085,
+    "ast_hash": "220339ab37069e120d89c26c06bacebb",
+    "semantic_hash": "220339ab37069e120d89c26c06bacebb"
+  },
+  "Images/sample.png": {
+    "mtime": 1789979207.6776447,
+    "seen": 1790017859.0333085,
+    "ast_hash": "c525cc655e4775626f389ff43621cedf",
+    "semantic_hash": "c525cc655e4775626f389ff43621cedf"
+  },
+  "public/images/Collaborators/Nimhans.png": {
+    "mtime": 1789979352.9688628,
+    "seen": 1790017859.0333085,
+    "ast_hash": "bb5130966d14b86f24b25768c12f5cad",
+    "semantic_hash": "bb5130966d14b86f24b25768c12f5cad"
+  },
+  "public/images/Logo/indzita_logo.png": {
+    "mtime": 1789979367.2496705,
+    "seen": 1790017859.0333085,
+    "ast_hash": "cf3ad161adbb52825419f44878d5b0bf",
+    "semantic_hash": "cf3ad161adbb52825419f44878d5b0bf"
+  },
+  "public/images/Product images/Compact Diagnostic System/device.png": {
+    "mtime": 1789979270.1221912,
+    "seen": 1790017859.0333085,
+    "ast_hash": "66a9cc8b3d9569e3688fc37da30615b4",
+    "semantic_hash": "66a9cc8b3d9569e3688fc37da30615b4"
+  },
+  "public/images/Product images/Intelligent Sample Processing/device_right.png": {
+    "mtime": 1789979285.8436854,
+    "seen": 1790017859.0333085,
+    "ast_hash": "ea9813bdda98ed7b8588b5e10b8f8e90",
+    "semantic_hash": "ea9813bdda98ed7b8588b5e10b8f8e90"
+  },
+  "public/images/Product images/bioreactor.jpg": {
+    "mtime": 1789979244.0021882,
+    "seen": 1790017859.0333085,
+    "ast_hash": "f74134ee7b7081aa861ac98980fb4cbc",
+    "semantic_hash": "f74134ee7b7081aa861ac98980fb4cbc"
+  },
+  "public/images/Product images/controller.jpg": {
+    "mtime": 1789979237.4084783,
+    "seen": 1790017859.0333085,
+    "ast_hash": "23156c60cd064303dde8476c23c01c82",
+    "semantic_hash": "23156c60cd064303dde8476c23c01c82"
+  },
+  "public/images/Team/team.png": {
+    "mtime": 1789998495.0768907,
+    "seen": 1790017859.0333085,
+    "ast_hash": "4c35ff97c6d1b272ac010fe52dd0cda1",
+    "semantic_hash": "4c35ff97c6d1b272ac010fe52dd0cda1"
+  }
+}
