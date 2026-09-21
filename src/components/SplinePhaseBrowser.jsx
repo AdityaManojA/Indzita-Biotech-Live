@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { workflowSteps } from '../data/indzitaData';
+import { PhaseCurveThumb, PhaseCurveViewer } from './PhaseGraphicCurves';
 import { 
   Play, 
   RotateCw, 
@@ -721,18 +722,14 @@ export default function SplinePhaseBrowser({ activeStepIndex, setActiveStepIndex
               </button>
             </div>
 
-            {/* Floating Picture-in-Picture Specimen Viewfinder Feed */}
+            {/* Floating Picture-in-Picture Signal Viewfinder Feed */}
             <div className="spline-canvas-pip" id="spline-specimen-pip">
               <div className="spline-pip-header">
-                <span>SPECIMEN VIEW</span>
+                <span>SIGNAL TRACE</span>
                 <span>0{activeStepIndex + 1} // 05</span>
               </div>
               <div className="spline-pip-img-frame">
-                <img 
-                  src={activeStep.image} 
-                  alt={`${activeStep.title} specimen micrograph`}
-                  onError={(e) => { e.currentTarget.src = '/images/sample.png'; }}
-                />
+                <PhaseCurveViewer phaseIndex={activeStepIndex} isPip={true} />
               </div>
               <div style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--text-ink)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                 {activeStep.title}
@@ -825,11 +822,7 @@ export default function SplinePhaseBrowser({ activeStepIndex, setActiveStepIndex
               aria-selected={activeStepIndex === idx}
             >
               <div className="spline-step-thumb">
-                <img 
-                  src={step.image} 
-                  alt={`${step.title} illustration`}
-                  onError={(e) => { e.currentTarget.src = '/images/sample.png'; }}
-                />
+                <PhaseCurveThumb phaseIndex={idx} isActive={activeStepIndex === idx} />
               </div>
               <div>
                 <div className="step-index-mono" style={{ fontSize: '0.68rem', marginBottom: '2px' }}>
@@ -843,16 +836,12 @@ export default function SplinePhaseBrowser({ activeStepIndex, setActiveStepIndex
           ))}
         </div>
 
-        {/* Phase Focal Card with Prominent Specimen Image & Specs */}
+        {/* Phase Focal Card with Animated Waveform / Signal Architecture & Specs */}
         <div className="phase-focal-card">
-          {/* Column 1: Clinical Specimen Image */}
+          {/* Column 1: Precision Scientific Signal Architecture */}
           <div className="phase-focal-img-frame">
-            <img 
-              src={activeStep.image} 
-              alt={`${activeStep.title} clinical illustration`} 
-              onError={(e) => { e.currentTarget.src = '/images/sample.png'; }}
-            />
-            <span className="phase-img-badge">STAGE 0{activeStepIndex + 1} SPECIMEN</span>
+            <PhaseCurveViewer phaseIndex={activeStepIndex} isPip={false} />
+            <span className="phase-img-badge">STAGE 0{activeStepIndex + 1} // SIGNAL ARCHITECTURE</span>
           </div>
 
           {/* Column 2: Narrative & Clinical Context */}

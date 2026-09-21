@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { workflowSteps } from '../data/indzitaData';
 import { ArrowLeft, ArrowRight, Play, Compass, FileText, ChevronLeft, ChevronRight } from 'lucide-react';
 import SplinePhaseBrowser from './SplinePhaseBrowser';
+import { PhaseCurveThumb, PhaseCurveViewer } from './PhaseGraphicCurves';
 
 export default function MolecularPipeline({ onOpenSimulator }) {
   const [viewMode, setViewMode] = useState('3d'); // '3d' (Spline space) or '2d' (Editorial specs)
@@ -104,11 +105,7 @@ export default function MolecularPipeline({ onOpenSimulator }) {
                   id={`pipeline-step-tab-${idx + 1}`}
                 >
                   <div className="step-rail-thumb">
-                    <img 
-                      src={step.image} 
-                      alt={`${step.title} illustration`} 
-                      onError={(e) => { e.currentTarget.src = '/images/sample.png'; }}
-                    />
+                    <PhaseCurveThumb phaseIndex={idx} isActive={activeStepIndex === idx} />
                   </div>
                   <div className="step-index-mono">PHASE 0{idx + 1}</div>
                   <div className="step-label">{step.title}</div>
@@ -119,11 +116,7 @@ export default function MolecularPipeline({ onOpenSimulator }) {
             {/* Editorial Viewer Grid */}
             <div className="pipeline-viewer-grid" id="pipeline-viewer-grid">
               <div className="pipeline-img-frame">
-                <img 
-                  src={activeStep.image} 
-                  alt={`${activeStep.title} clinical illustration`} 
-                  onError={(e) => { e.currentTarget.src = '/images/sample.png'; }}
-                />
+                <PhaseCurveViewer phaseIndex={activeStepIndex} isPip={false} />
               </div>
 
               <div>
