@@ -1,55 +1,61 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { MoveRight, Zap, Activity, Layers, RotateCw, Play, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { MoveRight, Zap, Activity, Layers, RotateCw, Play } from 'lucide-react';
 
 export default function MolecularAtlasGrid() {
-  // -------------------------------------------------------------
-  // Cell 01: Centrifugal Blood Fractionation State (Zero Biopsy)
-  // -------------------------------------------------------------
-  const [bloodSpinning, setBloodSpinning] = useState(false);
-  const [bloodSeparated, setBloodSeparated] = useState(true);
+  // =========================================================================
+  // Cell 01: Non-Invasive Blood Screening — Chromatogram Size Fractionation
+  // =========================================================================
+  const [scanActive, setScanActive] = useState(false);
+  const [scanOffset, setScanOffset] = useState(0);
 
-  const triggerBloodCentrifuge = () => {
-    if (bloodSpinning) return;
-    setBloodSpinning(true);
-    setBloodSeparated(false);
+  const triggerChromatogramScan = () => {
+    if (scanActive) return;
+    setScanActive(true);
+    setScanOffset(0);
+
+    const interval = setInterval(() => {
+      setScanOffset(prev => {
+        if (prev >= 200) {
+          clearInterval(interval);
+          setScanActive(false);
+          return 0;
+        }
+        return prev + 10;
+      });
+    }, 40);
+  };
+
+  // Periodic ambient pulse
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setScanActive(true);
+      setTimeout(() => setScanActive(false), 800);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // =========================================================================
+  // Cell 02: Proprietary piRNA Isolation Kit — Magnetic Binding Kinetics Trace
+  // =========================================================================
+  const [magneticPullActive, setMagneticPullActive] = useState(false);
+  const [bindingYield, setBindingYield] = useState(99.4);
+
+  const triggerMagneticPull = () => {
+    setMagneticPullActive(true);
+    setBindingYield(99.8);
     setTimeout(() => {
-      setBloodSeparated(true);
-      setBloodSpinning(false);
+      setMagneticPullActive(false);
+      setBindingYield(99.4);
     }, 1200);
   };
 
-  // Periodic subtle spin re-check
-  useEffect(() => {
-    const timer = setInterval(() => {
-      if (!bloodSpinning) {
-        setBloodSpinning(true);
-        setTimeout(() => {
-          setBloodSpinning(false);
-          setBloodSeparated(true);
-        }, 1000);
-      }
-    }, 6200);
-    return () => clearInterval(timer);
-  }, [bloodSpinning]);
-
-  // -------------------------------------------------------------
-  // Cell 02: Magnetic Bead piRNA Size Capture (26-32 nt)
-  // -------------------------------------------------------------
-  const [magneticCaptured, setMagneticCaptured] = useState(true);
-  const [beadYield, setBeadYield] = useState(99.1);
-
-  const toggleMagneticCapture = () => {
-    setMagneticCaptured(prev => !prev);
-    setBeadYield(prev => (prev === 99.1 ? 99.4 : 99.1));
-  };
-
-  // -------------------------------------------------------------
-  // Cell 03: Nanopore Single-Molecule Pulse Simulation
-  // -------------------------------------------------------------
+  // =========================================================================
+  // Cell 03: Nanopore Single-Molecule Sensing — Resistive Pulse Translocation
+  // =========================================================================
   const [pulseActive, setPulseActive] = useState(false);
   const [poreCurrent, setPoreCurrent] = useState(120.0);
-  const [pulseCount, setPulseCount] = useState(152);
+  const [pulseCount, setPulseCount] = useState(156);
 
   const triggerNanoporePulse = () => {
     if (pulseActive) return;
@@ -76,11 +82,11 @@ export default function MolecularAtlasGrid() {
     return () => clearInterval(timer);
   }, []);
 
-  // -------------------------------------------------------------
-  // Cell 04: Bioreactor Dynamic Micro-Stirring RPM
-  // -------------------------------------------------------------
+  // =========================================================================
+  // Cell 04: 12-Well Organoid Bioreactor — Rotational Shear & Laminar Flow Trace
+  // =========================================================================
   const [bioreactorRpm, setBioreactorRpm] = useState(65);
-  const [vortexAngle, setVortexAngle] = useState(0);
+  const [wavePhase, setWavePhase] = useState(0);
 
   const cycleRpm = () => {
     if (bioreactorRpm === 40) setBioreactorRpm(65);
@@ -89,33 +95,29 @@ export default function MolecularAtlasGrid() {
   };
 
   useEffect(() => {
-    const intervalTime = bioreactorRpm === 90 ? 30 : bioreactorRpm === 65 ? 45 : 70;
+    const step = bioreactorRpm === 90 ? 0.35 : bioreactorRpm === 65 ? 0.22 : 0.12;
     const timer = setInterval(() => {
-      setVortexAngle(prev => (prev + 10) % 360);
-    }, intervalTime);
+      setWavePhase(prev => (prev + step) % (Math.PI * 2));
+    }, 50);
     return () => clearInterval(timer);
   }, [bioreactorRpm]);
 
-  // -------------------------------------------------------------
-  // Cell 05: Closed Cassette Fluidic Dual Panel Runner
-  // -------------------------------------------------------------
+  // =========================================================================
+  // Cell 05: Automated Diagnostic Platform — Dual-Panel Optical Emission Trace
+  // =========================================================================
   const [activePanel, setActivePanel] = useState('cervical');
   const [assayRunning, setAssayRunning] = useState(false);
-  const [fluidPulsePos, setFluidPulsePos] = useState(220);
+  const [signalIntensity, setSignalIntensity] = useState(4.6);
 
   const runPanelAssay = () => {
     if (assayRunning) return;
     setAssayRunning(true);
-    setFluidPulsePos(40);
+    setSignalIntensity(1.0);
 
     setTimeout(() => {
-      setFluidPulsePos(130);
-    }, 500);
-
-    setTimeout(() => {
-      setFluidPulsePos(210);
+      setSignalIntensity(activePanel === 'cervical' ? 4.6 : 3.8);
       setAssayRunning(false);
-    }, 1100);
+    }, 900);
   };
 
   return (
@@ -135,71 +137,75 @@ export default function MolecularAtlasGrid() {
           </div>
         </div>
 
-        {/* The 5-Cell Bento Atlas Grid */}
+        {/* The 5-Cell Bento Atlas Grid — All Interactive Scientific Instruments */}
         <div className="home-features-atlas">
 
           {/* ========================================================= */}
-          {/* Cell 01: Non-Invasive Blood Screening (Centrifugal Liquid Biopsy) */}
+          {/* Cell 01: Non-Invasive Blood Screening (Chromatogram Trace) */}
           {/* ========================================================= */}
           <article className="home-feat-cell" id="atlas-cell-blood-sample">
             <div className="home-feat-cell-stage">
               <div className="atlas-stage-container">
                 <div className="atlas-oscilloscope-box">
                   <div className="atlas-trace-top">
-                    <span style={{ color: '#a1a1aa' }}>BLOOD FRACTIONATION TRACE</span>
-                    <span style={{ color: bloodSpinning ? '#38bdf8' : '#10b981', fontWeight: 700 }}>
-                      {bloodSpinning ? 'SPINNING: 2,000 x g' : 'CELL-FREE PLASMA READY'}
+                    <span style={{ color: '#a1a1aa' }}>CHROMATOGRAM: 26–32 nt FRACTION</span>
+                    <span style={{ color: scanActive ? '#38bdf8' : '#10b981', fontWeight: 700 }}>
+                      {scanActive ? 'SCANNING PEAK...' : 'PURITY: >99.2%'}
                     </span>
                   </div>
 
                   <svg width="100%" height="64" viewBox="0 0 240 64" preserveAspectRatio="none">
-                    {/* Centrifuge Separation Chamber / Micro-Tube Tube Outline */}
-                    <rect x="20" y="16" width="200" height="32" rx="16" fill="#18181b" stroke="#3f3f46" strokeWidth="1.5" />
+                    {/* Baseline Voltage / Absorption Grid */}
+                    <line x1="0" y1="20" x2="240" y2="20" stroke="#27272a" strokeDasharray="3" />
+                    <line x1="0" y1="52" x2="240" y2="52" stroke="#27272a" strokeDasharray="3" />
 
-                    {bloodSeparated ? (
-                      <>
-                        {/* Erythrocyte Packed Cellular Layer (Left/Bottom) */}
-                        <path d="M 20 16 L 95 16 L 95 48 L 20 48 Z" fill="#7f1d1d" opacity="0.9" />
-                        
-                        {/* Buffy Coat Interface Line (Leukocytes / Platelets) */}
-                        <line x1="95" y1="16" x2="95" y2="48" stroke="#fef08a" strokeWidth="3" opacity="0.85" />
+                    {/* Chromatogram Peaks: Noise -> miRNA (21nt) -> Sharp piRNA Peak (26-32nt) */}
+                    <path
+                      d="M 10 52 L 40 52 Q 55 52, 60 44 Q 65 52, 80 52 Q 105 52, 120 12 Q 135 52, 160 52 L 230 52"
+                      fill="none"
+                      stroke={scanActive ? "#38bdf8" : "#a1a1aa"}
+                      strokeWidth="2"
+                      style={{ transition: 'stroke 0.2s ease' }}
+                    />
 
-                        {/* Supernatant Plasma Layer containing intact 26-32 nt piRNA */}
-                        <path d="M 98 16 L 204 16 A 16 16 0 0 1 220 32 A 16 16 0 0 1 204 48 L 98 48 Z" fill="#0284c7" opacity="0.35" />
+                    {/* Highlighted piRNA Target Peak Fill */}
+                    <path
+                      d="M 105 52 Q 120 12, 135 52 Z"
+                      fill={scanActive ? "rgba(56, 189, 248, 0.3)" : "rgba(16, 185, 129, 0.2)"}
+                    />
 
-                        {/* Floating piRNA Biomarker Particles */}
-                        <circle cx="125" cy="30" r="2.5" fill="#38bdf8" />
-                        <circle cx="150" cy="24" r="2" fill="#38bdf8" />
-                        <circle cx="170" cy="36" r="2.5" fill="#38bdf8" />
-                        <circle cx="195" cy="28" r="2" fill="#38bdf8" />
-                      </>
-                    ) : (
-                      /* Whole Unfractionated Blood during vortex mixing */
-                      <rect x="20" y="16" width="200" height="32" rx="16" fill="#991b1b" opacity="0.95">
-                        <animate attributeName="opacity" values="0.75;1;0.75" dur="0.3s" repeatCount="indefinite" />
-                      </rect>
+                    {/* Peak Marker Text */}
+                    <text x="120" y="26" fill={scanActive ? "#38bdf8" : "#10b981"} fontSize="7" fontFamily="var(--font-mono)" textAnchor="middle" fontWeight="bold">
+                      piRNA (26–32 nt)
+                    </text>
+
+                    {/* Real-time Scanning Vertical Reticle */}
+                    {scanActive && (
+                      <line 
+                        x1={20 + scanOffset} 
+                        y1="10" 
+                        x2={20 + scanOffset} 
+                        y2="55" 
+                        stroke="#38bdf8" 
+                        strokeWidth="1.5" 
+                        opacity="0.85" 
+                      />
                     )}
-
-                    {/* Measurement Graduation Markings */}
-                    <line x1="60" y1="20" x2="60" y2="28" stroke="#71717a" strokeWidth="1" />
-                    <line x1="100" y1="20" x2="100" y2="28" stroke="#71717a" strokeWidth="1" />
-                    <line x1="140" y1="20" x2="140" y2="28" stroke="#71717a" strokeWidth="1" />
-                    <line x1="180" y1="20" x2="180" y2="28" stroke="#71717a" strokeWidth="1" />
                   </svg>
 
                   <div className="atlas-trace-bottom">
                     <span>SAMPLE: 5 mL WHOLE BLOOD</span>
-                    <span>FRACTION: PLASMA &amp; piRNA</span>
+                    <span>BIOPSY: ZERO INVASIVE</span>
                   </div>
                 </div>
 
                 <button 
                   className="atlas-trigger-btn"
-                  onClick={triggerBloodCentrifuge}
-                  title="Simulate Centrifugal Separation of Plasma piRNA"
+                  onClick={triggerChromatogramScan}
+                  title="Simulate Chromatogram Optical Scan of 26-32 nt piRNA"
                 >
                   <Activity size={11} color="#38bdf8" />
-                  <span>Run Fractionation (Zero Biopsy)</span>
+                  <span>Scan 26–32 nt Fraction (Zero Biopsy)</span>
                 </button>
               </div>
             </div>
@@ -231,74 +237,56 @@ export default function MolecularAtlasGrid() {
           </article>
 
           {/* ========================================================= */}
-          {/* Cell 02: Proprietary piRNA Isolation Kit (Magnetic Bead Capture) */}
+          {/* Cell 02: Proprietary piRNA Isolation Kit (Binding Kinetics) */}
           {/* ========================================================= */}
           <article className="home-feat-cell" id="atlas-cell-isolation-kit">
             <div className="home-feat-cell-stage">
               <div className="atlas-stage-container">
                 <div className="atlas-oscilloscope-box">
                   <div className="atlas-trace-top">
-                    <span style={{ color: '#a1a1aa' }}>MAGNETIC BEAD piRNA BINDING</span>
-                    <span style={{ color: magneticCaptured ? '#c084fc' : '#a1a1aa', fontWeight: 700 }}>
-                      {magneticCaptured ? 'MAGNETIC PINCH (26–32 nt)' : 'DIFFUSE SUSPENSION'}
+                    <span style={{ color: '#a1a1aa' }}>MAGNETIC BINDING KINETICS</span>
+                    <span style={{ color: magneticPullActive ? '#c084fc' : '#a1a1aa', fontWeight: 700 }}>
+                      YIELD: {bindingYield.toFixed(1)}% {magneticPullActive && '(PULL ACTIVE)'}
                     </span>
                   </div>
 
                   <svg width="100%" height="64" viewBox="0 0 240 64" preserveAspectRatio="none">
-                    {/* Isolation Micro-Column Wall */}
-                    <rect x="20" y="14" width="165" height="36" rx="4" fill="#18181b" stroke="#3f3f46" strokeWidth="1" />
-                    
-                    {/* Neodymium Magnetic Pole Block (Right) */}
-                    <rect x="195" y="12" width="25" height="40" rx="3" fill="#2e1065" stroke="#7c3aed" strokeWidth="1.5" />
-                    <text x="207" y="36" fill="#c084fc" fontSize="9" fontFamily="var(--font-mono)" textAnchor="middle" fontWeight="bold">N</text>
+                    {/* Grid Lines */}
+                    <line x1="0" y1="18" x2="240" y2="18" stroke="#27272a" strokeDasharray="3" />
+                    <line x1="0" y1="46" x2="240" y2="46" stroke="#27272a" strokeDasharray="3" />
 
-                    {/* Magnetic Flux Lines when active */}
-                    {magneticCaptured && (
-                      <>
-                        <path d="M 195 20 C 175 14, 155 14, 135 20" fill="none" stroke="#7c3aed" strokeWidth="1" strokeDasharray="3 3" opacity="0.6" />
-                        <path d="M 195 44 C 175 50, 155 50, 135 44" fill="none" stroke="#7c3aed" strokeWidth="1" strokeDasharray="3 3" opacity="0.6" />
-                      </>
-                    )}
+                    {/* Sigmoidal Binding Curve */}
+                    <path
+                      d={magneticPullActive
+                        ? "M 10 50 Q 60 50, 90 20 L 230 20"
+                        : "M 10 50 Q 80 50, 120 22 L 230 22"}
+                      fill="none"
+                      stroke={magneticPullActive ? "#c084fc" : "#a855f7"}
+                      strokeWidth="2.2"
+                      style={{ transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)' }}
+                    />
 
-                    {/* Paramagnetic Nanobeads with Bound piRNA */}
-                    {magneticCaptured ? (
-                      /* Concentrated Magnetic Bead Band Snapped to Wall */
-                      <g style={{ transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)' }}>
-                        <circle cx="172" cy="22" r="3.5" fill="#a855f7" />
-                        <circle cx="178" cy="28" r="4.5" fill="#c084fc" />
-                        <circle cx="173" cy="35" r="4" fill="#a855f7" />
-                        <circle cx="180" cy="42" r="3.5" fill="#c084fc" />
-                        <circle cx="166" cy="28" r="3" fill="#9333ea" />
-                        <circle cx="168" cy="39" r="3" fill="#9333ea" />
-                        {/* Unbound Waste Particles Washing Out */}
-                        <circle cx="60" cy="32" r="1.5" fill="#52525b" />
-                        <circle cx="85" cy="26" r="1.5" fill="#52525b" />
-                      </g>
-                    ) : (
-                      /* Diffuse suspension before magnetic pull */
-                      <g style={{ transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)' }}>
-                        <circle cx="50" cy="24" r="3.5" fill="#a855f7" />
-                        <circle cx="85" cy="38" r="4.5" fill="#c084fc" />
-                        <circle cx="120" cy="22" r="4" fill="#a855f7" />
-                        <circle cx="145" cy="36" r="3.5" fill="#c084fc" />
-                        <circle cx="100" cy="44" r="3" fill="#9333ea" />
-                      </g>
-                    )}
+                    {/* Kinetic Nanobead Nodes along the curve */}
+                    <circle cx="50" cy="50" r="2.5" fill="#a855f7" />
+                    <circle cx="80" cy={magneticPullActive ? "38" : "44"} r="3" fill="#c084fc" />
+                    <circle cx="110" cy={magneticPullActive ? "20" : "26"} r="3.5" fill="#a855f7" />
+                    <circle cx="160" cy={magneticPullActive ? "20" : "22"} r="3" fill="#c084fc" />
+                    <circle cx="210" cy={magneticPullActive ? "20" : "22"} r="3" fill="#c084fc" />
                   </svg>
 
                   <div className="atlas-trace-bottom">
                     <span>PURITY: A260/A280 ≥ 1.95</span>
-                    <span>SIZE TARGET: 26–32 nt</span>
+                    <span>TARGET: 26–32 nt piRNA</span>
                   </div>
                 </div>
 
                 <button 
                   className="atlas-trigger-btn"
-                  onClick={toggleMagneticCapture}
-                  title="Toggle Magnetic Separation Field"
+                  onClick={triggerMagneticPull}
+                  title="Simulate Paramagnetic Bead Capture & Kinetics"
                 >
                   <Layers size={11} color="#c084fc" />
-                  <span>{magneticCaptured ? 'Release Beads' : 'Snap Magnetic Field (26–32 nt)'}</span>
+                  <span>Snap Magnetic Bead Pull (26–32 nt)</span>
                 </button>
               </div>
             </div>
@@ -330,7 +318,7 @@ export default function MolecularAtlasGrid() {
           </article>
 
           {/* ========================================================= */}
-          {/* Cell 03: Nanopore Single-Molecule Pulse Translocation */}
+          {/* Cell 03: Nanopore Single-Molecule Sensing (The Gold Standard) */}
           {/* ========================================================= */}
           <article className="home-feat-cell" id="atlas-cell-nanopore">
             <div className="home-feat-cell-stage">
@@ -409,44 +397,37 @@ export default function MolecularAtlasGrid() {
               <div className="atlas-stage-container">
                 <div className="atlas-oscilloscope-box">
                   <div className="atlas-trace-top">
-                    <span style={{ color: '#a1a1aa' }}>12-WELL VORTEX STIRRING</span>
+                    <span style={{ color: '#a1a1aa' }}>STIRRING DYNAMICS &amp; SHEAR TRACE</span>
                     <span style={{ color: '#f59e0b', fontWeight: 700 }}>
                       {bioreactorRpm} RPM CONSTANT
                     </span>
                   </div>
 
                   <svg width="100%" height="64" viewBox="0 0 240 64" preserveAspectRatio="none">
-                    {/* Culture Plate Row Baseline */}
-                    <rect x="10" y="8" width="220" height="48" rx="6" fill="#141417" stroke="#27272a" strokeWidth="1" />
+                    {/* Baseline Velocity Lines */}
+                    <line x1="0" y1="20" x2="240" y2="20" stroke="#27272a" strokeDasharray="3" />
+                    <line x1="0" y1="48" x2="240" y2="48" stroke="#27272a" strokeDasharray="3" />
 
-                    {/* 6 Visible Organoid Wells along the front row */}
-                    {[28, 65, 102, 138, 175, 212].map((cx, i) => (
-                      <g key={i}>
-                        {/* Well Aperture */}
-                        <circle cx={cx} cy="32" r="14" fill="#1f1f23" stroke="#3f3f46" strokeWidth="1" />
-                        
-                        {/* Stirring Vortex Streamlines */}
-                        <ellipse 
-                          cx={cx} 
-                          cy="32" 
-                          rx="9" 
-                          ry="7" 
-                          fill="none" 
-                          stroke="#f59e0b" 
-                          strokeWidth="1.2" 
-                          strokeDasharray="5 3"
-                          transform={`rotate(${vortexAngle * (i % 2 === 0 ? 1 : -1)}, ${cx}, 32)`}
-                        />
+                    {/* Smooth Harmonic Laminar Velocity Wave (Zero Turbulent Spikes) */}
+                    <path
+                      d={`M 10 ${34 + Math.sin(wavePhase) * 14} 
+                          Q 50 ${34 + Math.sin(wavePhase + 1.2) * 14}, 90 ${34 + Math.sin(wavePhase + 2.4) * 14} 
+                          T 170 ${34 + Math.sin(wavePhase + 4.0) * 14} 
+                          T 230 ${34 + Math.sin(wavePhase + 5.2) * 14}`}
+                      fill="none"
+                      stroke="#f59e0b"
+                      strokeWidth="2"
+                    />
 
-                        {/* Center Organoid Spheroid */}
-                        <circle cx={cx} cy="32" r="3" fill="#fbbf24" opacity="0.9" />
-                      </g>
-                    ))}
+                    {/* Laminar Fluid Indicator */}
+                    <text x="120" y="16" fill="#fbbf24" fontSize="7" fontFamily="var(--font-mono)" textAnchor="middle">
+                      LAMINAR SHEAR: 0.018 Pa
+                    </text>
                   </svg>
 
                   <div className="atlas-trace-bottom">
-                    <span>SHEAR: 0.018 Pa (SAFE)</span>
-                    <span>INCUBATOR COMPATIBLE</span>
+                    <span>VESSEL: 12-WELL CULTURE PLATE</span>
+                    <span>MOTOR HEAT: 0.0°C (INCUBATOR SAFE)</span>
                   </div>
                 </div>
 
@@ -512,45 +493,47 @@ export default function MolecularAtlasGrid() {
               <div className="atlas-stage-container">
                 <div className="atlas-oscilloscope-box">
                   <div className="atlas-trace-top">
-                    <span style={{ color: '#a1a1aa' }}>CLOSED CASSETTE FLUIDIC LOGIC</span>
+                    <span style={{ color: '#a1a1aa' }}>DUAL-PANEL OPTICAL EMISSION TRACE</span>
                     <span style={{ color: '#06b6d4', fontWeight: 700 }}>
-                      PANEL: {activePanel === 'cervical' ? 'CERVICAL CANCER' : "PARKINSON'S"}
+                      SIGNAL: +{signalIntensity}x {activePanel === 'cervical' ? 'CC-piRNA' : 'PD-piRNA'}
                     </span>
                   </div>
 
                   <svg width="100%" height="64" viewBox="0 0 240 64" preserveAspectRatio="none">
-                    {/* Buffers Chamber Reservoir (Left) */}
-                    <rect x="15" y="16" width="36" height="32" rx="3" fill="#164e63" stroke="#0891b2" strokeWidth="1" />
-                    <text x="33" y="35" fill="#67e8f9" fontSize="7" fontFamily="var(--font-mono)" textAnchor="middle">BUFFERS</text>
+                    {/* Baseline Noise Lines */}
+                    <line x1="0" y1="18" x2="240" y2="18" stroke="#27272a" strokeDasharray="3" />
+                    <line x1="0" y1="48" x2="240" y2="48" stroke="#27272a" strokeDasharray="3" />
 
-                    {/* Microfluidic Connecting Channel */}
-                    <path 
-                      d="M 51 32 L 85 32 L 85 22 L 135 22 L 135 32 L 175 32" 
-                      fill="none" 
-                      stroke="#27272a" 
-                      strokeWidth="3" 
+                    {/* Reference Channel Trace (Flatline RNU6) */}
+                    <path d="M 10 46 L 230 46" fill="none" stroke="#52525b" strokeWidth="1" strokeDasharray="4 2" />
+
+                    {/* Active Dual-Panel Fluorescence Emission Curve */}
+                    <path
+                      d={assayRunning 
+                        ? "M 10 46 L 80 46 Q 130 46, 150 14 Q 170 46, 230 46"
+                        : "M 10 46 L 80 46 Q 130 46, 150 20 Q 170 46, 230 46"}
+                      fill="none"
+                      stroke="#06b6d4"
+                      strokeWidth="2.2"
+                      style={{ transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)' }}
                     />
-                    
-                    {/* Moving Reagent / Sample Pulse */}
-                    <circle cx={fluidPulsePos} cy={fluidPulsePos < 85 ? 32 : fluidPulsePos < 135 ? 22 : 32} r="4" fill="#06b6d4">
-                      {assayRunning && (
-                        <animate attributeName="opacity" values="0.5;1;0.5" dur="0.2s" repeatCount="indefinite" />
-                      )}
-                    </circle>
 
-                    {/* Cassette Reaction Chamber (Right) */}
-                    <rect x="175" y="14" width="50" height="36" rx="4" fill="#155e75" stroke="#06b6d4" strokeWidth="1.2" />
-                    <text x="200" y="30" fill="#cffafe" fontSize="7" fontFamily="var(--font-mono)" textAnchor="middle" fontWeight="bold">
-                      {activePanel === 'cervical' ? 'CC-piRNA' : 'PD-piRNA'}
-                    </text>
-                    <text x="200" y="42" fill="#a5f3fc" fontSize="6" fontFamily="var(--font-mono)" textAnchor="middle">
-                      {assayRunning ? 'ANALYZING...' : 'QC VALIDATED'}
+                    {/* Emission Peak Fill Area */}
+                    <path 
+                      d={assayRunning 
+                        ? "M 110 46 Q 150 14, 190 46 Z" 
+                        : "M 110 46 Q 150 20, 190 46 Z"} 
+                      fill="rgba(6, 182, 212, 0.25)" 
+                    />
+
+                    <text x="150" y="32" fill="#67e8f9" fontSize="7" fontFamily="var(--font-mono)" textAnchor="middle" fontWeight="bold">
+                      {activePanel === 'cervical' ? 'piRNA-142 PEAK' : 'piRNA-708 PEAK'}
                     </text>
                   </svg>
 
                   <div className="atlas-trace-bottom">
-                    <span>CARRIER: CLOSED CASSETTE</span>
-                    <span>CONTAMINATION: ZERO CARRYOVER</span>
+                    <span>PANEL: {activePanel === 'cervical' ? 'CERVICAL' : "PARKINSON'S"}</span>
+                    <span>CARRYOVER: ZERO CONTAMINATION</span>
                   </div>
                 </div>
 
@@ -576,7 +559,7 @@ export default function MolecularAtlasGrid() {
                     title="Simulate Automated Assay Processing"
                   >
                     <Play size={11} color="#06b6d4" fill="#06b6d4" />
-                    <span>Run {activePanel === 'cervical' ? 'Cervical' : "Parkinson's"} Assay</span>
+                    <span>Run {activePanel === 'cervical' ? 'Cervical' : "Parkinson's"} Scan</span>
                   </button>
                 </div>
               </div>
