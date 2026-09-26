@@ -19,7 +19,7 @@ export default function LeadershipTeam() {
       <div className="container">
         {/* Section Lead */}
         <div className="section-lead">
-          <div className="index-tag">06 // Leadership &amp; Scientific Faculty</div>
+          <div className="index-tag">06 // Leadership & Scientific Faculty</div>
           <h2>The Team Behind IndZita</h2>
           <p>
             A multidisciplinary coalition of translational RNA biologists, biomedical instrumentation architects, and clinical oncology trial leaders.
@@ -28,16 +28,16 @@ export default function LeadershipTeam() {
 
         {/* Featured Hero Team Photograph Showcase */}
         <div className="team-hero-showcase" id="team-photo-showcase">
-          <div 
+          <div
             className="team-photo-frame"
             onClick={() => setIsModalOpen(true)}
             title="Click to view full-resolution team photograph"
           >
             <div className="team-photo-tag">
-              [ CORE SCIENTIFIC &amp; LEADERSHIP TEAM ]
+              [ CORE SCIENTIFIC & LEADERSHIP TEAM ]
             </div>
 
-            <button 
+            <button
               className="team-photo-expand-btn"
               onClick={(e) => {
                 e.stopPropagation();
@@ -49,8 +49,8 @@ export default function LeadershipTeam() {
               <span>Full Resolution</span>
             </button>
 
-            <img 
-              src="/images/Team/team.png" 
+            <img
+              src="/images/Team/team.png"
               alt="IndZita Biotech Leadership and Scientific Team"
               loading="lazy"
             />
@@ -59,7 +59,7 @@ export default function LeadershipTeam() {
           <div className="team-photo-caption-bar">
             <div>
               <div className="team-photo-caption-title">
-                INDZITA BIOTECH &amp; BRIC - RGCB TRANSLATIONAL FACULTY
+                INDZITA BIOTECH & BRIC - RGCB TRANSLATIONAL FACULTY
               </div>
               <div style={{ fontSize: '0.84rem', color: 'var(--text-body)', marginTop: '3px' }}>
                 Bridging academic molecular discovery, point-of-care automation engineering, and certified clinical diagnostics.
@@ -76,12 +76,12 @@ export default function LeadershipTeam() {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '28px', borderBottom: '1px solid var(--border-hairline)', paddingBottom: '14px' }}>
           <div>
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
-              Governance &amp; Executive Direction
+              Governance & Executive Direction
             </div>
             <h3 style={{ fontSize: '1.45rem', marginTop: '2px' }}>Board of Directors</h3>
           </div>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-            3 DIRECTORS
+            {leadershipTeam.length} DIRECTORS
           </span>
         </div>
 
@@ -153,14 +153,14 @@ export default function LeadershipTeam() {
 
       {/* Full-Resolution Team Lightbox Modal */}
       {isModalOpen && (
-        <div 
-          className="modal-backdrop-clean" 
+        <div
+          className="modal-backdrop-clean"
           onClick={() => setIsModalOpen(false)}
           style={{ zIndex: 2500 }}
         >
-          <div 
-            className="modal-window-clean" 
-            style={{ maxWidth: '1040px' }} 
+          <div
+            className="modal-window-clean"
+            style={{ maxWidth: '1040px' }}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="modal-topbar-clean">
@@ -168,10 +168,10 @@ export default function LeadershipTeam() {
                 <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', background: 'var(--bg-subtle)', padding: '3px 8px', border: '1px solid var(--border-hairline)', borderRadius: '2px' }}>
                   FULL PHOTOGRAPHY // 2280 × 1528 PX
                 </span>
-                <span style={{ fontWeight: 600, fontSize: '0.95rem' }}>IndZita Biotech Leadership &amp; Scientific Team</span>
+                <span style={{ fontWeight: 600, fontSize: '0.95rem' }}>IndZita Biotech Leadership & Scientific Team</span>
               </div>
-              <button 
-                onClick={() => setIsModalOpen(false)} 
+              <button
+                onClick={() => setIsModalOpen(false)}
                 style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-ink)', display: 'flex', alignItems: 'center', padding: '4px' }}
                 aria-label="Close modal"
               >
@@ -180,10 +180,10 @@ export default function LeadershipTeam() {
             </div>
 
             <div style={{ background: '#09090b', padding: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <img 
-                src="/images/Team/team.png" 
-                alt="IndZita Leadership Team" 
-                style={{ maxWidth: '100%', maxHeight: '72vh', objectFit: 'contain', display: 'block', margin: 'auto' }} 
+              <img
+                src="/images/Team/team.png"
+                alt="IndZita Leadership Team"
+                style={{ maxWidth: '100%', maxHeight: '72vh', objectFit: 'contain', display: 'block', margin: 'auto' }}
               />
             </div>
 
@@ -196,7 +196,7 @@ export default function LeadershipTeam() {
               </div>
             </div>
           </div>
-        </div>
+        )
       )}
     </section>
   );

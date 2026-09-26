@@ -32,7 +32,7 @@ A clean, structured extraction of all textual content, product details, workflow
 | 1 | Sample Collection | Sample Collection | `Images/sample.png` | 411 × 323 px | 231.06 KB |
 | 2 | piRNA Isolation Kit | piRNA Isolation Kit | `Images/kit.png` | 422 × 315 px | 201.27 KB |
 | 3 | piRNA Amplification | piRNA Amplification | `Images/graph.png` | 407 × 318 px | 196.02 KB |
-| 4 | QPCR Analysis | QPCR Analysis | `Images/machine.png` | 404 × 316 px | 208.26 KB |
+| 4 | Sensing technology | Sensing technology | `Images/machine.png` | 404 × 316 px | 208.26 KB |
 | 5 | Clinical Report | Clinical Report | `Images/report.png` | 404 × 316 px | 218.49 KB |
 
 ---
@@ -60,7 +60,7 @@ A clean, structured extraction of all textual content, product details, workflow
 ## 5. Product: Automated Diagnostic Platform
 
 - **Category / Pretitle**: AI Powered Automation
-- **Platform Name**: Automated Platform for Non-Invasive Diagnosis of Cervical Cancer and Parkinson’s disease
+- **Platform Name**: Automated Platform for Non-Invasive Diagnosis of Cervical Cancer
 - **Summary**: A next-generation automated diagnostic platform integrating intelligent sample handling, buffer management, and rapid molecular analysis into a compact clinical system.
 - **Hardware Subsystems**:
   - **Compact Diagnostic System**:
@@ -100,7 +100,6 @@ A clean, structured extraction of all textual content, product details, workflow
 |---|---|---|:---:|:---:|
 | BRIC - RGCB | https://rgcb.res.in | `Images/Collaborators/BRIC RGCB logo.png` | 677 × 192 px | 96.11 KB |
 | Karkinos Healthcare | https://www.karkinos.in | `Images/Collaborators/Karkinos logo.png` | 1200 × 628 px | 23.68 KB |
-| NIMHANS | https://nimhans.ac.in | `Images/Collaborators/Nimhans.png` | 2686 × 530 px | 399.35 KB |
 
 ---
 
@@ -109,12 +108,12 @@ A clean, structured extraction of all textual content, product details, workflow
 All local image files stored under `Images/`:
 
 | Item / Subject | Local Path | Dimensions | File Size | Format |
-|---|---|:---:|:---:|:---:|
+|---|---|---|:---:|:---:|
 | Company Logo | `Images/Logo/indzita_logo.png` | 2320 × 2320 px | 2.43 MB | PNG |
 | Workflow 1: Sample Collection | `Images/sample.png` | 411 × 323 px | 231.06 KB | PNG |
 | Workflow 2: piRNA Isolation Kit | `Images/kit.png` | 422 × 315 px | 201.27 KB | PNG |
 | Workflow 3: piRNA Amplification | `Images/graph.png` | 407 × 318 px | 196.02 KB | PNG |
-| Workflow 4: QPCR Analysis | `Images/machine.png` | 404 × 316 px | 208.26 KB | PNG |
+| Workflow 4: Sensing technology | `Images/machine.png` | 404 × 316 px | 208.26 KB | PNG |
 | Workflow 5: Clinical Report | `Images/report.png` | 404 × 316 px | 218.49 KB | PNG |
 | Bioreactor Controller Unit | `Images/Product images/controller.jpg` | 836 × 531 px | 58.00 KB | JPEG |
 | Bioreactor Docking Nest | `Images/Product images/bioreactor.jpg` | 543 × 801 px | 54.11 KB | JPEG |
@@ -122,7 +121,6 @@ All local image files stored under `Images/`:
 | Intelligent Sample Processing | `Images/Product images/Intelligent Sample Processing/device_right.png` | 1402 × 1122 px | 1.65 MB | PNG |
 | BRIC - RGCB Logo | `Images/Collaborators/BRIC RGCB logo.png` | 677 × 192 px | 96.11 KB | PNG |
 | Karkinos Healthcare Logo | `Images/Collaborators/Karkinos logo.png` | 1200 × 628 px | 23.68 KB | PNG |
-| NIMHANS Logo | `Images/Collaborators/Nimhans.png` | 2686 × 530 px | 399.35 KB | PNG |
 | Core Team Group Photo | `public/images/Team/team.png` | 2280 × 1528 px | 4.12 MB | PNG |
 
 ---
@@ -157,4 +155,3 @@ All local image files stored under `Images/`:
   - Cleared lab-scale validation in human cell cultures and mouse models.
   - Pilot human blood study completed at laboratory scale.
   - Early-stage automated clinical prototype fabrication currently underway.
-

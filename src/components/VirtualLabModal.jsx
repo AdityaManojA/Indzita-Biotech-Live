@@ -99,7 +99,7 @@ Status:            CLINICALLY VERIFIED
         <div className="modal-topbar-clean">
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.84rem', fontWeight: 700, color: 'var(--text-ink)' }}>
-              LABORATORY WORKSTATION // piRNA AUTOMATED ANALYZER
+              LABORATORY WORKSTATION // BIOMARKER AUTOMATED ANALYZER (VIRTUAL LAB - DISABLED)
             </span>
           </div>
           <button 

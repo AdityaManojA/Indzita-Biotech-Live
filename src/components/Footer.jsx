@@ -13,7 +13,7 @@ export default function Footer({ onOpenArticle }) {
               {companyData.name}
             </div>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', lineHeight: 1.7 }}>
-              Translating piRNA molecular biomarkers into early non-invasive diagnostics for Cervical Cancer and Parkinson’s Disease, alongside microfluidic organoid bioreactors.
+              Translating biomarker molecular signatures into early non-invasive diagnostics for Cervical Cancer, alongside microfluidic bioreactor systems.
             </p>
           </div>
 
@@ -51,8 +51,7 @@ export default function Footer({ onOpenArticle }) {
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.88rem' }}>
               <li><a href="https://rgcb.res.in" target="_blank" rel="noreferrer" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>BRIC - RGCB</a></li>
               <li><a href="https://www.karkinos.in" target="_blank" rel="noreferrer" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Karkinos Healthcare</a></li>
-              <li><a href="https://nimhans.ac.in" target="_blank" rel="noreferrer" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>NIMHANS</a></li>
-              <li><a href="#team" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Leadership &amp; Advisory</a></li>
+                            <li><a href="#team" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Leadership &amp; Advisory</a></li>
             </ul>
           </div>
 
@@ -61,8 +60,8 @@ export default function Footer({ onOpenArticle }) {
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.74rem', color: 'var(--text-ink)', marginBottom: '16px', fontWeight: 700, textTransform: 'uppercase' }}>
               Direct Gateway
             </div>
-            <a 
-              href={`mailto:${companyData.email}`} 
+            <a
+              href={`mailto:${companyData.email}`}
               className="btn btn-secondary btn-sm"
               id="footer-email-btn"
               style={{ display: 'inline-flex' }}
@@ -73,6 +72,9 @@ export default function Footer({ onOpenArticle }) {
             </a>
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.74rem', color: 'var(--text-muted)', marginTop: '14px' }}>
               ENTITY: {companyData.legalName}
+            </div>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.74rem', color: 'var(--text-muted)', marginTop: '14px' }}>
+              Contact Number: +91 9940292503
             </div>
           </div>
         </div>

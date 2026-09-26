@@ -79,7 +79,7 @@ export default function BioreactorSection() {
 
             <div style={{ marginTop: '24px', paddingTop: '16px', borderTop: '1px solid var(--border-hairline)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--text-muted)' }}>VESSEL STANDARD:</span>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-ink)' }}>12-WELL CULTURE PLATES</span>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-ink)' }}>12-WELL PLATES / CUSTOM DESIGNED PLATES</span>
             </div>
           </div>
 
@@ -124,7 +124,7 @@ export default function BioreactorSection() {
               Stirring Rate Calibration
             </div>
             <div style={{ fontSize: '0.88rem', color: 'var(--text-muted)', marginTop: '4px' }}>
-              Microfluidic shear stress controller across 12-well incubator nests:
+              Microfluidic shear stress controller across plate-based incubator nests:
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginTop: '16px' }}>
               <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-muted)' }}>10 RPM</span>

@@ -12,7 +12,7 @@ export default function DiagnosticPlatform() {
         <div className="section-lead">
           <div className="index-tag">04 // Automated Diagnostic Instrumentation</div>
           <h2>
-            Automated Platform for Non-Invasive Diagnosis of Cervical Cancer &amp; Parkinson’s
+            Automated Platform for Non-Invasive Diagnosis of Cervical Cancer
           </h2>
           <p>{diagnosticPlatformData.subtitle}</p>
         </div>
@@ -22,8 +22,8 @@ export default function DiagnosticPlatform() {
           {/* Module 1: Compact Diagnostic System */}
           <div className="platform-card-editorial" id="diag-compact-station">
             <div className="platform-img-viewport">
-              <img 
-                src={diagnosticPlatformData.subsystems[0].image} 
+              <img
+                src={diagnosticPlatformData.subsystems[0].image}
                 alt={diagnosticPlatformData.subsystems[0].title}
                 onError={(e) => { e.currentTarget.src = '/images/sample.png'; }}
               />
@@ -52,14 +52,14 @@ export default function DiagnosticPlatform() {
           {/* Module 2: Intelligent Sample Processing */}
           <div className="platform-card-editorial" id="diag-processing-station">
             <div className="platform-img-viewport">
-              <img 
-                src={diagnosticPlatformData.subsystems[1].image} 
+              <img
+                src={diagnosticPlatformData.subsystems[1].image}
                 alt={diagnosticPlatformData.subsystems[1].title}
                 onError={(e) => { e.currentTarget.src = '/images/sample.png'; }}
               />
 
               {/* Minimalist Crosshair Pin 1: Buffers Chamber */}
-              <button 
+              <button
                 className="crosshair-pill-clean"
                 style={{ top: '24px', left: '24px' }}
                 onClick={() => setActiveHotspot(diagnosticPlatformData.subsystems[1].hotspots[0])}
@@ -71,7 +71,7 @@ export default function DiagnosticPlatform() {
               </button>
 
               {/* Minimalist Crosshair Pin 2: Sample / Cassette Port */}
-              <button 
+              <button
                 className="crosshair-pill-clean"
                 style={{ bottom: '24px', right: '24px' }}
                 onClick={() => setActiveHotspot(diagnosticPlatformData.subsystems[1].hotspots[1])}
