@@ -196,8 +196,9 @@ export default function LeadershipTeam() {
               </div>
             </div>
           </div>
-        )
-      )}
+        </div>
+      )
+    }
     </section>
   );
 }
